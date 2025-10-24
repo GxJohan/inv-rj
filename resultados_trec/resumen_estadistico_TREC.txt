@@ -1,0 +1,154 @@
+
+================================================================================
+           RESUMEN ESTADÍSTICO - INDICADOR TREC
+      Tiempo de Respuesta ante Eventos Correctivos
+================================================================================
+
+Fecha del análisis: 2025-10-20 19:59:02
+
+================================================================================
+1. DISEÑO DEL ESTUDIO
+================================================================================
+
+Tipo de estudio:        Cuasi-experimental con mediciones pre-post
+Tamaño muestral:        n = 86 eventos pareados
+Variable medida:        Tiempo de respuesta (minutos)
+Periodo PREPRUEBA:      Noviembre-Diciembre 2024 (ANTES del sistema)
+Periodo POSTPRUEBA:     Enero-Febrero 2025 (DESPUÉS del sistema)
+
+================================================================================
+2. ESTADÍSTICOS DESCRIPTIVOS
+================================================================================
+
+PREPRUEBA (Antes de implementar el sistema):
+------------------------------------------------------------
+  Media:                64.63 minutos
+  Mediana:              62.85 minutos
+  Desviación Estándar:  14.24 minutos
+  Varianza:             202.90
+  Mínimo:               42.70 minutos
+  Q1 (Percentil 25):    52.95 minutos
+  Q3 (Percentil 75):    74.80 minutos
+  Máximo:               95.40 minutos
+  Rango:                52.70 minutos
+  IQR:                  21.85 minutos
+  Coef. Variación:      22.04%
+  Error Estándar:       1.54 minutos
+
+POSTPRUEBA (Después de implementar el sistema):
+------------------------------------------------------------
+  Media:                24.97 minutos
+  Mediana:              24.60 minutos
+  Desviación Estándar:  5.31 minutos
+  Varianza:             28.24
+  Mínimo:               16.20 minutos
+  Q1 (Percentil 25):    20.56 minutos
+  Q3 (Percentil 75):    28.68 minutos
+  Máximo:               36.40 minutos
+  Rango:                20.20 minutos
+  IQR:                  8.11 minutos
+  Coef. Variación:      21.28%
+  Error Estándar:       0.57 minutos
+
+================================================================================
+3. MEJORA OBSERVADA
+================================================================================
+
+Reducción absoluta:     39.66 minutos
+Mejora porcentual:      61.37%
+Diferencia en mediana:  38.25 minutos
+
+================================================================================
+4. ANÁLISIS INFERENCIAL
+================================================================================
+
+4.1 PRUEBAS DE NORMALIDAD (Shapiro-Wilk)
+------------------------------------------------------------
+Nivel de significancia: α = 0.05
+
+PREPRUEBA:
+  Estadístico W:  0.958133
+  p-valor:        0.007078
+  Conclusión:     Distribución NO NORMAL
+
+POSTPRUEBA:
+  Estadístico W:  0.963739
+  p-valor:        0.016298
+  Conclusión:     Distribución NO NORMAL
+
+DIFERENCIAS PAREADAS:
+  Estadístico W:  0.956057
+  p-valor:        0.005238
+  Conclusión:     Distribución NO NORMAL
+
+4.2 PRUEBA DE HIPÓTESIS
+------------------------------------------------------------
+H0: μ_PREPRUEBA = μ_POSTPRUEBA (no hay diferencia)
+H1: μ_PREPRUEBA ≠ μ_POSTPRUEBA (hay diferencia significativa)
+
+PRUEBA T DE STUDENT PAREADA:
+  Estadístico t:  41.068224
+  p-valor:        0.000000
+  GL:             85
+  Decisión:       RECHAZAR H0
+
+PRUEBA DE WILCOXON:
+  Estadístico W:  0.000000
+  p-valor:        0.000000
+  Decisión:       RECHAZAR H0
+
+PRUEBA RECOMENDADA: Wilcoxon
+  p-valor final:  0.000000
+  Decisión:       RECHAZAR H0 (diferencia SIGNIFICATIVA)
+
+4.3 TAMAÑO DEL EFECTO
+------------------------------------------------------------
+d de Cohen:       4.4285
+Interpretación:   GRANDE (d ≥ 0.8)
+
+4.4 INTERVALO DE CONFIANZA AL 95%
+------------------------------------------------------------
+Diferencia media: 39.66 minutos
+Error estándar:   0.97 minutos
+t crítico:        1.9883
+IC 95%:           [37.74, 41.58] minutos
+
+================================================================================
+5. CONCLUSIONES
+================================================================================
+
+
+1. Existe evidencia estadísticamente SIGNIFICATIVA (p = 0.000000 < 0.05)
+   de que la implementación del sistema redujo el tiempo de respuesta ante
+   eventos correctivos (TREC).
+
+2. La reducción promedio observada es de 39.66 minutos, lo que
+   representa una mejora del 61.37% respecto a la situación inicial.
+
+3. El tamaño del efecto es GRANDE, lo que indica un impacto
+   SUSTANCIAL
+   desde el punto de vista práctico.
+
+4. Con un 95% de confianza, la verdadera reducción en tiempo de respuesta
+   se encuentra entre 37.74 y 41.58 minutos.
+
+5. Estos resultados VALIDAN LA HIPÓTESIS DE INVESTIGACIÓN, demostrando que
+   el sistema implementado mejora significativamente la eficiencia operativa
+   en la respuesta ante eventos correctivos.
+
+
+================================================================================
+6. ARCHIVOS GENERADOS
+================================================================================
+
+Gráficos (carpeta resultados_trec/):
+  1. 01_boxplot_comparativo.png          - Boxplot comparativo con estadísticos
+  2. 02_histogramas_normalidad.png       - Histogramas con curva normal
+  3. 03_barras_medias_error.png          - Gráfico de barras con error estándar
+
+Archivo de texto:
+  - resumen_estadistico_TREC.txt         - Este archivo
+
+================================================================================
+FIN DEL REPORTE
+================================================================================

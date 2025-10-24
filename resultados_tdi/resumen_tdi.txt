@@ -1,0 +1,125 @@
+
+================================================================================
+ANÁLISIS ESTADÍSTICO: TASA DE DECISIONES INFORMADAS (TDI)
+================================================================================
+Fecha del análisis: 2025-10-24 17:17:49
+Tesis de Ingeniería - Indicador 3
+
+================================================================================
+1. INFORMACIÓN DEL ESTUDIO
+================================================================================
+
+Diseño: Estudio cuasi-experimental con mediciones pre-post
+Tamaño muestral: n = 132 decisiones pareadas
+Variables: Binaria (0 = sin análisis, 1 = con análisis)
+Periodo PREPRUEBA: Noviembre-Diciembre 2024 (ANTES del sistema)
+Periodo POSTPRUEBA: Enero-Febrero 2025 (DESPUÉS del sistema)
+
+================================================================================
+2. RESULTADOS DEL INDICADOR TDI (%)
+================================================================================
+
+PREPRUEBA (ANTES del sistema):
+  • Total decisiones:          132
+  • Decisiones informadas:     66
+  • Decisiones NO informadas:  66
+  • TDI PREPRUEBA:             50.00%
+
+POSTPRUEBA (DESPUÉS del sistema):
+  • Total decisiones:          132
+  • Decisiones informadas:     111
+  • Decisiones NO informadas:  21
+  • TDI POSTPRUEBA:            84.09%
+
+MEJORA OBSERVADA:
+  • Mejora absoluta:           +34.09 puntos porcentuales
+  • Mejora relativa:           +68.18%
+  • N° decisiones mejoradas:   +45
+
+================================================================================
+3. ANÁLISIS POR TIPO DE DECISIÓN
+================================================================================
+
+Tipo Decisión  N Decisiones  Informadas PRE TDI PRE (%)  Informadas POST TDI POST (%) Mejora (pp)
+  Planificada            40              40     100.00%               40      100.00%       +0.00
+    Rutinaria            49              26      53.06%               49      100.00%      +46.94
+      Urgente            43               0       0.00%               22       51.16%      +51.16
+
+TIPO CON MAYOR MEJORA: Urgente (+51.16 pp)
+
+================================================================================
+4. ANÁLISIS INFERENCIAL (Prueba McNemar)
+================================================================================
+
+Tabla de Contingencia 2x2:
+                     POSTPRUEBA
+                 No Informada  Informada
+PREPRUEBA  No           21           45
+           Sí            0           66
+
+Interpretación:
+  • n00 = 21: Decisiones NO informadas que SIGUEN sin serlo
+  • n01 = 45: Decisiones NO informadas → AHORA SÍ informadas (MEJORA)
+  • n10 = 0: Decisiones SÍ informadas → AHORA NO informadas (EMPEORAMIENTO)
+  • n11 = 66: Decisiones SÍ informadas que SIGUEN siéndolo
+
+Hipótesis:
+  H0: P(Informada_POST) = P(Informada_PRE)  (no hay cambio)
+  H1: P(Informada_POST) ≠ P(Informada_PRE)  (hay cambio significativo)
+  Nivel de significancia: α = 0.05
+
+Resultados:
+  • Estadístico:   0.0000
+  • p-valor:       0.000000
+  • Decisión:      RECHAZAR H0
+
+================================================================================
+5. TAMAÑO DEL EFECTO E INTERVALOS DE CONFIANZA
+================================================================================
+
+h de Cohen para proporciones:
+  • Proporción PREPRUEBA:  0.5000 (50.00%)
+  • Proporción POSTPRUEBA: 0.8409 (84.09%)
+  • h de Cohen:            0.7502
+  • Interpretación:        MEDIANO (0.5 ≤ h < 0.8)
+
+Intervalo de Confianza 95%:
+  • Diferencia observada:  34.09 puntos porcentuales
+  • Error estándar:        5.39 pp
+  • IC 95%:                [23.52%, 44.66%]
+
+================================================================================
+6. CONCLUSIONES
+================================================================================
+
+✅ RECHAZAMOS H0 (p = 0.000000 < α = 0.05)
+
+Existe evidencia estadísticamente SIGNIFICATIVA de que la implementación del
+sistema AUMENTÓ la tasa de decisiones informadas.
+
+El TDI aumentó de 50.00% a 84.09%, lo que representa
+una mejora de 34.09 puntos porcentuales (68.18% de incremento relativo).
+
+El tamaño del efecto es MEDIANO (0.5 ≤ h < 0.8), indicando un impacto
+MODERADO
+desde el punto de vista práctico.
+
+Análisis de transiciones: 45 decisiones MEJORARON (pasaron de no informadas
+a informadas), mientras que 0 EMPEORARON, resultando en una mejora neta
+de 45 decisiones.
+
+Estos resultados VALIDAN LA HIPÓTESIS DE INVESTIGACIÓN, demostrando que
+el sistema implementado mejora significativamente la calidad de la toma de
+decisiones operativas al promover el análisis previo basado en datos.
+
+================================================================================
+ARCHIVOS GENERADOS
+================================================================================
+
+1. resultados_tdi/01_tdi_comparativo.png - Gráfico comparativo TDI
+2. resultados_tdi/02_barras_apiladas.png - Distribución informadas/no informadas
+3. resultados_tdi/resumen_tdi.txt - Este archivo
+
+================================================================================
+FIN DEL ANÁLISIS
+================================================================================

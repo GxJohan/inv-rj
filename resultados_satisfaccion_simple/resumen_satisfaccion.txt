@@ -1,0 +1,81 @@
+
+======================================================================
+    RESUMEN ESTADÍSTICO - SATISFACCIÓN DE RESPONSABLES
+======================================================================
+
+Fecha del análisis: 2025-10-23 00:31:07
+
+======================================================================
+1. DISEÑO DEL ESTUDIO
+======================================================================
+
+Tipo:              Cuasi-experimental pre-post
+Muestra:           n = 8 responsables operativos (censo completo)
+Escala:            Likert 1-5 (ordinal)
+Datos:             Pareados (mismas personas antes/después)
+
+======================================================================
+2. ESTADÍSTICOS DESCRIPTIVOS
+======================================================================
+
+PREPRUEBA:
+  Media:           2.62 / 5.00
+  Desv. Estándar:  0.30
+  Mínimo:          2.22
+  Máximo:          3.11
+
+POSTPRUEBA:
+  Media:           4.12 / 5.00
+  Desv. Estándar:  0.45
+  Mínimo:          3.44
+  Máximo:          4.78
+
+MEJORA OBSERVADA:
+  Absoluta:        +1.51 puntos
+  Porcentual:      +57.52%
+
+======================================================================
+3. PRUEBA ESTADÍSTICA (WILCOXON)
+======================================================================
+
+H0: No hay diferencia en satisfacción (PRE = POST)
+H1: Hay diferencia significativa (PRE ≠ POST)
+
+Estadístico W:     0.0000
+p-valor:           0.007812
+Nivel α:           0.05
+Decisión:          RECHAZAR H0
+
+Tamaño del efecto:
+  r de Rosenthal:  0.9405
+  Interpretación:  GRANDE (r ≥ 0.5)
+
+======================================================================
+4. CONCLUSIÓN
+======================================================================
+
+
+✅ Existe evidencia estadísticamente SIGNIFICATIVA (p = 0.007812 < 0.05)
+   de que la implementación del sistema AUMENTÓ la satisfacción de los
+   responsables operativos.
+
+   - Mejora promedio: 1.51 puntos (escala 1-5)
+   - Mejora porcentual: 57.52%
+   - Tamaño del efecto: GRANDE (r ≥ 0.5)
+
+   Estos resultados VALIDAN LA HIPÓTESIS DE INVESTIGACIÓN.
+
+======================================================================
+5. ARCHIVOS GENERADOS
+======================================================================
+
+Gráficos (carpeta resultados_satisfaccion_simple/):
+  1. 01_boxplot.png          - Boxplot comparativo
+  2. 02_barras_medias.png    - Barras con error estándar
+
+Reporte:
+  - resumen_satisfaccion.txt - Este archivo
+
+======================================================================
+FIN DEL REPORTE
+======================================================================

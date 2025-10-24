@@ -1,0 +1,216 @@
+
+================================================================================
+        RESUMEN ESTADÍSTICO - INDICADOR SATISFACCIÓN
+   Nivel de Satisfacción de Responsables Operativos
+================================================================================
+
+Fecha del análisis: 2025-10-23 00:19:23
+
+================================================================================
+1. DISEÑO DEL ESTUDIO
+================================================================================
+
+Tipo de estudio:        Cuasi-experimental con mediciones pre-post
+Tamaño muestral:        n = 8 responsables operativos (censo completo)
+Variables medidas:      18 preguntas agrupadas en 6 dimensiones
+Escala:                 Likert 1-5 (ordinal)
+Periodo PREPRUEBA:      ANTES de implementar el sistema
+Periodo POSTPRUEBA:     DESPUÉS de implementar el sistema
+
+Dimensiones evaluadas:
+  1. Acceso a información (P1-P3)
+  2. Calidad de datos (P4-P6)
+  3. Facilidad de uso (P7-P9)
+  4. Utilidad para decisiones (P10-P12)
+  5. Tiempo de respuesta (P13-P15)
+  6. Soporte general (P16-P18)
+
+================================================================================
+2. ESTADÍSTICOS DESCRIPTIVOS GLOBALES
+================================================================================
+
+PREPRUEBA (Antes de implementar el sistema):
+------------------------------------------------------------
+  Media global:          2.58 / 5.00
+  Mediana global:        3.00 / 5.00
+  Desviación Estándar:   0.60
+  Mínimo:                1
+  Q1 (Percentil 25):     2.00
+  Q3 (Percentil 75):     3.00
+  Máximo:                4
+  Coef. Variación:       23.22%
+  Respuestas totales:    144
+
+POSTPRUEBA (Después de implementar el sistema):
+------------------------------------------------------------
+  Media global:          4.06 / 5.00
+  Mediana global:        4.00 / 5.00
+  Desviación Estándar:   0.59
+  Mínimo:                3
+  Q1 (Percentil 25):     4.00
+  Q3 (Percentil 75):     4.00
+  Máximo:                5
+  Coef. Variación:       14.62%
+  Respuestas totales:    144
+
+================================================================================
+3. MEJORA OBSERVADA
+================================================================================
+
+Mejora absoluta:        +1.49 puntos (escala 1-5)
+Mejora porcentual:      +57.68%
+IC 95%:                 [1.31, 1.66] puntos
+
+================================================================================
+4. ESTADÍSTICOS POR DIMENSIÓN
+================================================================================
+
+               Dimensión  Preprueba  Postprueba  Mejora (puntos)  Mejora (%)
+     Tiempo de respuesta   2.375000    4.333333         1.958333   82.456140
+    Acceso a información   2.291667    4.125000         1.833333   80.000000
+Utilidad para decisiones   2.291667    4.125000         1.833333   80.000000
+        Calidad de datos   2.500000    4.291667         1.791667   71.666667
+         Soporte general   2.750000    3.708333         0.958333   34.848485
+        Facilidad de uso   3.250000    3.791667         0.541667   16.666667
+
+================================================================================
+5. ESTADÍSTICOS POR RESPONSABLE
+================================================================================
+
+ ID                Cargo  Preprueba  Postprueba  Mejora (puntos)  Mejora (%)
+R01   Jefe de Producción   2.611111    4.500000         1.888889   72.340426
+R08 Ingeniero de Proceso   3.111111    4.722222         1.611111   51.785714
+R02     Supervisor Corte   2.500000    4.111111         1.611111   64.444444
+R06     Jefe Turno Tarde   2.500000    3.944444         1.444444   57.777778
+R07     Jefe Turno Noche   2.222222    3.666667         1.444444   65.000000
+R05    Jefe Turno Mañana   2.944444    4.333333         1.388889   47.169811
+R03   Supervisor Formado   2.555556    3.833333         1.277778   50.000000
+R04   Supervisor Sellado   2.166667    3.388889         1.222222   56.410256
+
+================================================================================
+6. ANÁLISIS INFERENCIAL
+================================================================================
+
+6.1 PRUEBAS DE NORMALIDAD (Shapiro-Wilk)
+------------------------------------------------------------
+Nivel de significancia: α = 0.05
+
+PREPRUEBA (Promedios Individuales):
+  Estadístico W:  0.929214
+  p-valor:        0.508950
+  Conclusión:     Distribución NORMAL
+
+POSTPRUEBA (Promedios Individuales):
+  Estadístico W:  0.987929
+  p-valor:        0.991215
+  Conclusión:     Distribución NORMAL
+
+DIFERENCIAS PAREADAS:
+  Estadístico W:  0.939127
+  p-valor:        0.602507
+  Conclusión:     Distribución NORMAL
+
+6.2 PRUEBAS DE HIPÓTESIS
+------------------------------------------------------------
+H0: No hay diferencia en satisfacción (PRE = POST)
+H1: Hay diferencia significativa (PRE ≠ POST)
+
+PRUEBA DE WILCOXON (No Paramétrica - OFICIAL):
+  Estadístico W:  0.000000
+  p-valor:        0.007812
+  Decisión:       RECHAZAR H0
+
+PRUEBA T DE STUDENT PAREADA (Paramétrica - Complementaria):
+  Estadístico t:  -19.676490
+  p-valor:        0.000000
+  GL:             7
+  Decisión:       RECHAZAR H0
+
+PRUEBA OFICIAL: Wilcoxon
+  p-valor final:  0.007812
+  Decisión:       RECHAZAR H0 (diferencia SIGNIFICATIVA)
+
+6.3 TAMAÑO DEL EFECTO
+------------------------------------------------------------
+d de Cohen:       6.9567
+Interpretación:   GRANDE (d ≥ 0.8)
+
+r de Rosenthal:   0.9405
+Interpretación:   GRANDE (r ≥ 0.5)
+
+6.4 INTERVALO DE CONFIANZA AL 95%
+------------------------------------------------------------
+Diferencia media: 1.49 puntos
+Error estándar:   0.08 puntos
+t crítico:        2.3646
+IC 95%:           [1.31, 1.66] puntos
+
+6.5 CONSISTENCIA INTERNA (Alpha de Cronbach)
+------------------------------------------------------------
+PREPRUEBA:        0.9146 (EXCELENTE)
+POSTPRUEBA:       0.9632 (EXCELENTE)
+
+================================================================================
+7. ANÁLISIS DE SIGNIFICANCIA POR DIMENSIÓN (Wilcoxon)
+================================================================================
+
+               Dimensión   W  p-valor Significativo   d Cohen    Tamaño Efecto
+    Acceso a información 0.0 0.007812            SÍ  7.275816 GRANDE (d ≥ 0.8)
+        Calidad de datos 0.0 0.007812            SÍ 10.385487 GRANDE (d ≥ 0.8)
+        Facilidad de uso 0.0 0.015625            SÍ  1.532065 GRANDE (d ≥ 0.8)
+Utilidad para decisiones 0.0 0.007812            SÍ  7.275816 GRANDE (d ≥ 0.8)
+     Tiempo de respuesta 0.0 0.007812            SÍ  4.331948 GRANDE (d ≥ 0.8)
+         Soporte general 0.0 0.007812            SÍ  4.486090 GRANDE (d ≥ 0.8)
+
+================================================================================
+8. CONCLUSIONES
+================================================================================
+
+
+1. Existe evidencia estadísticamente SIGNIFICATIVA (p = 0.007812 < 0.05)
+   de que la implementación del sistema AUMENTÓ la satisfacción de los
+   responsables operativos.
+
+2. La mejora promedio observada es de 1.49 puntos (escala 1-5),
+   lo que representa un incremento del 57.68% respecto a la
+   situación inicial.
+
+3. El tamaño del efecto es GRANDE, lo que indica un impacto
+   SUSTANCIAL
+   desde el punto de vista práctico.
+
+4. Con un 95% de confianza, el verdadero aumento en satisfacción se encuentra
+   entre 1.31 y 1.66 puntos.
+
+5. El cuestionario muestra consistencia interna EXCELENTE en
+   PREPRUEBA (α=0.9146) y EXCELENTE en POSTPRUEBA
+   (α=0.9632), validando la fiabilidad del instrumento.
+
+6. La dimensión con MAYOR MEJORA es "Tiempo de respuesta"
+   (+1.96 puntos), mientras que la dimensión
+   "Facilidad de uso" muestra la menor mejora
+   (+0.54 puntos).
+
+7. Estos resultados VALIDAN LA HIPÓTESIS DE INVESTIGACIÓN, demostrando que
+   el sistema implementado mejora significativamente la satisfacción de los
+   responsables operativos en sus actividades diarias.
+
+
+================================================================================
+9. ARCHIVOS GENERADOS
+================================================================================
+
+Gráficos (carpeta resultados_satisfaccion/):
+  1. 01_boxplot_comparativo.png          - Boxplot global preprueba vs postprueba
+  2. 02_barras_dimensiones.png           - Comparación por dimensión
+  3. 03_barras_responsables.png          - Comparación por responsable
+  4. 04_radar_chart.png                  - Radar chart de 6 dimensiones
+  5. 05_heatmap_respuestas.png           - Heatmap de respuestas individuales
+  6. 06_histogramas_frecuencia.png       - Distribución de frecuencias
+
+Archivo de texto:
+  - resumen_estadistico_SATISFACCION.txt - Este archivo
+
+================================================================================
+FIN DEL REPORTE
+================================================================================
