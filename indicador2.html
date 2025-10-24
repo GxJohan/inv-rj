@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicador Satisfacción - Análisis Estadístico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            background-color: white;
+            padding: 60px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 22px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        h4 {
+            color: #34495e;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        p {
+            text-align: justify;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .metadata {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 13px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        thead {
+            background-color: #3498db;
+            color: white;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        tbody tr:hover {
+            background-color: #e8f4f8;
+        }
+
+        .table-caption {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .figure-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .figure-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .figure-caption {
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #2c3e50;
+            font-style: italic;
+        }
+
+        .highlight-box {
+            background-color: #ecf0f1;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 25px 0;
+            font-size: 14px;
+        }
+
+        .highlight-box strong {
+            color: #2c3e50;
+        }
+
+        .result-box {
+            background-color: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .result-box h4 {
+            color: #155724;
+            margin-top: 0;
+        }
+
+        ul {
+            margin-left: 40px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .section-number {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .improvement-highlight {
+            background-color: #d1ecf1;
+            border: 2px solid #17a2b8;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .improvement-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0c5460;
+            margin: 10px 0;
+        }
+
+        .data-table-container {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        .data-table {
+            font-size: 11px;
+        }
+
+        .data-table th {
+            background-color: #2c3e50;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Título Principal -->
+        <h1>Análisis Estadístico del Indicador de Satisfacción</h1>
+        <h1 style="font-size: 22px; margin-top: 10px;">Nivel de Satisfacción de Responsables Operativos</h1>
+
+        <div class="metadata">
+            Fecha del análisis: Octubre 2025<br>
+            Investigación: Tesis de Ingeniería<br>
+            Diseño: Estudio cuasi-experimental con mediciones pre-post<br>
+            Tamaño muestral: n = 8 responsables operativos (censo completo)<br>
+            Instrumento: Cuestionario Likert (18 preguntas, 6 dimensiones)
+        </div>
+
+        <!-- Introducción -->
+        <div class="highlight-box">
+            <strong>Objetivo del estudio:</strong> Evaluar el impacto de la implementación del sistema de gestión en el nivel de satisfacción de los responsables operativos. Se comparan mediciones realizadas antes (preprueba) y después (postprueba) de la implementación del sistema mediante un cuestionario de 18 preguntas agrupadas en 6 dimensiones, utilizando escala Likert de 1 a 5.
+        </div>
+
+        <p><strong>Periodo de preprueba:</strong> ANTES de implementar el sistema</p>
+        <p><strong>Periodo de postprueba:</strong> DESPUÉS de implementar el sistema</p>
+        <p><strong>Variable medida:</strong> Nivel de satisfacción (escala Likert 1-5, datos ordinales)</p>
+        <p><strong>Participantes:</strong> 8 responsables operativos (Jefes de Producción, Supervisores de línea, Jefes de Turno, Ingeniero de Proceso)</p>
+
+        <!-- ============================================ -->
+        <!-- ESTRUCTURA DEL INSTRUMENTO -->
+        <!-- ============================================ -->
+
+        <h2>Estructura del Instrumento de Medición</h2>
+
+        <p>El cuestionario consta de 18 preguntas distribuidas en 6 dimensiones clave que evalúan diferentes aspectos de la satisfacción con el sistema de gestión implementado.</p>
+
+        <div class="table-caption">Tabla 1. Dimensiones y preguntas del cuestionario de satisfacción</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Dimensión</th>
+                    <th>Código</th>
+                    <th>Pregunta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="3"><strong>Acceso a información</strong></td>
+                    <td>P1</td>
+                    <td>El sistema me permite acceder a información de producción en tiempo real</td>
+                </tr>
+                <tr>
+                    <td>P2</td>
+                    <td>Puedo consultar datos históricos de producción fácilmente</td>
+                </tr>
+                <tr>
+                    <td>P3</td>
+                    <td>La información de diferentes líneas está consolidada en un solo lugar</td>
+                </tr>
+                <tr>
+                    <td rowspan="3"><strong>Calidad de datos</strong></td>
+                    <td>P4</td>
+                    <td>Los datos mostrados son precisos y confiables</td>
+                </tr>
+                <tr>
+                    <td>P5</td>
+                    <td>La información es consistente entre diferentes reportes</td>
+                </tr>
+                <tr>
+                    <td>P6</td>
+                    <td>Los datos están actualizados y reflejan la situación actual</td>
+                </tr>
+                <tr>
+                    <td rowspan="3"><strong>Facilidad de uso</strong></td>
+                    <td>P7</td>
+                    <td>La interfaz del sistema es intuitiva y fácil de usar</td>
+                </tr>
+                <tr>
+                    <td>P8</td>
+                    <td>Puedo navegar por las diferentes funciones sin dificultad</td>
+                </tr>
+                <tr>
+                    <td>P9</td>
+                    <td>El tiempo de aprendizaje del sistema fue razonable</td>
+                </tr>
+                <tr>
+                    <td rowspan="3"><strong>Utilidad para decisiones</strong></td>
+                    <td>P10</td>
+                    <td>El sistema me ayuda a analizar problemas de producción</td>
+                </tr>
+                <tr>
+                    <td>P11</td>
+                    <td>Las alertas del sistema son útiles para tomar decisiones oportunas</td>
+                </tr>
+                <tr>
+                    <td>P12</td>
+                    <td>Los reportes generados apoyan efectivamente mi toma de decisiones</td>
+                </tr>
+                <tr>
+                    <td rowspan="3"><strong>Tiempo de respuesta</strong></td>
+                    <td>P13</td>
+                    <td>El sistema genera información rápidamente cuando la necesito</td>
+                </tr>
+                <tr>
+                    <td>P14</td>
+                    <td>Puedo identificar problemas más rápido con el sistema actual</td>
+                </tr>
+                <tr>
+                    <td>P15</td>
+                    <td>El tiempo para tomar decisiones correctivas ha mejorado</td>
+                </tr>
+                <tr>
+                    <td rowspan="3"><strong>Soporte general</strong></td>
+                    <td>P16</td>
+                    <td>La capacitación recibida fue adecuada para usar el sistema</td>
+                </tr>
+                <tr>
+                    <td>P17</td>
+                    <td>El soporte técnico resuelve problemas eficientemente</td>
+                </tr>
+                <tr>
+                    <td>P18</td>
+                    <td>La documentación del sistema es clara y útil</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Escala de respuesta (Likert):</strong></p>
+        <ul>
+            <li><strong>1:</strong> Totalmente en desacuerdo</li>
+            <li><strong>2:</strong> En desacuerdo</li>
+            <li><strong>3:</strong> Neutral</li>
+            <li><strong>4:</strong> De acuerdo</li>
+            <li><strong>5:</strong> Totalmente de acuerdo</li>
+        </ul>
+
+        <!-- ============================================ -->
+        <!-- 4.1.2.1 ANÁLISIS DESCRIPTIVO -->
+        <!-- ============================================ -->
+
+        <h2><span class="section-number">4.1.2.1</span> Análisis Descriptivo</h2>
+
+        <p>El análisis descriptivo permite caracterizar las distribuciones de las puntuaciones de satisfacción en ambas fases del estudio, identificando tendencias centrales, dispersión y cambios observados. A continuación se presentan los estadísticos clave para la preprueba y postprueba.</p>
+
+        <!-- Estadísticos Generales -->
+        <h3>Estadísticos descriptivos globales</h3>
+        <p>Los datos globales corresponden a 8 responsables operativos que respondieron 18 preguntas cada uno, generando un total de 144 respuestas por fase. La Tabla 2 presenta los estadísticos descriptivos completos para ambas fases.</p>
+
+        <div class="table-caption">Tabla 2. Estadísticos descriptivos globales (n = 8 responsables, 144 respuestas por fase)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Preprueba</th>
+                    <th>Postprueba</th>
+                    <th>Unidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tamaño de muestra (n)</strong></td>
+                    <td>8</td>
+                    <td>8</td>
+                    <td>responsables</td>
+                </tr>
+                <tr>
+                    <td><strong>Respuestas totales</strong></td>
+                    <td>144</td>
+                    <td>144</td>
+                    <td>respuestas</td>
+                </tr>
+                <tr>
+                    <td><strong>Media global</strong></td>
+                    <td>2.58</td>
+                    <td>4.06</td>
+                    <td>escala 1-5</td>
+                </tr>
+                <tr>
+                    <td><strong>Mediana global</strong></td>
+                    <td>3.00</td>
+                    <td>4.00</td>
+                    <td>escala 1-5</td>
+                </tr>
+                <tr>
+                    <td><strong>Desviación estándar (σ)</strong></td>
+                    <td>0.60</td>
+                    <td>0.59</td>
+                    <td>puntos</td>
+                </tr>
+                <tr>
+                    <td><strong>Mínimo</strong></td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>escala 1-5</td>
+                </tr>
+                <tr>
+                    <td><strong>Cuartil 1 (Q1)</strong></td>
+                    <td>2.00</td>
+                    <td>4.00</td>
+                    <td>escala 1-5</td>
+                </tr>
+                <tr>
+                    <td><strong>Cuartil 3 (Q3)</strong></td>
+                    <td>3.00</td>
+                    <td>4.00</td>
+                    <td>escala 1-5</td>
+                </tr>
+                <tr>
+                    <td><strong>Máximo</strong></td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>escala 1-5</td>
+                </tr>
+                <tr>
+                    <td><strong>Coeficiente de variación (CV)</strong></td>
+                    <td>23.22</td>
+                    <td>14.62</td>
+                    <td>%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación global:</strong> El nivel de satisfacción promedio antes de implementar el sistema era de 2.58/5.00 (poco satisfactorio), con una mediana de 3.00 (neutral). Tras la implementación, el promedio aumentó a 4.06/5.00 (satisfactorio), con mediana de 4.00 (de acuerdo). La desviación estándar se mantuvo similar (~0.60), pero el coeficiente de variación disminuyó de 23.22% a 14.62%, indicando mayor homogeneidad en las respuestas positivas.</p>
+
+        <!-- Análisis por Dimensión -->
+        <h3>Análisis por dimensión</h3>
+        <p>Se calcularon los promedios de satisfacción para cada una de las 6 dimensiones evaluadas en el cuestionario. La Tabla 3 presenta la comparación entre preprueba y postprueba por dimensión.</p>
+
+        <div class="table-caption">Tabla 3. Comparación de satisfacción por dimensión</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Dimensión</th>
+                    <th>Preprueba</th>
+                    <th>Postprueba</th>
+                    <th>Mejora (puntos)</th>
+                    <th>Mejora (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tiempo de respuesta</strong></td>
+                    <td>2.38</td>
+                    <td>4.33</td>
+                    <td>+1.96</td>
+                    <td>+82.46%</td>
+                </tr>
+                <tr>
+                    <td><strong>Acceso a información</strong></td>
+                    <td>2.29</td>
+                    <td>4.13</td>
+                    <td>+1.83</td>
+                    <td>+80.00%</td>
+                </tr>
+                <tr>
+                    <td><strong>Utilidad para decisiones</strong></td>
+                    <td>2.29</td>
+                    <td>4.13</td>
+                    <td>+1.83</td>
+                    <td>+80.00%</td>
+                </tr>
+                <tr>
+                    <td><strong>Calidad de datos</strong></td>
+                    <td>2.50</td>
+                    <td>4.29</td>
+                    <td>+1.79</td>
+                    <td>+71.67%</td>
+                </tr>
+                <tr>
+                    <td><strong>Soporte general</strong></td>
+                    <td>2.75</td>
+                    <td>3.71</td>
+                    <td>+0.96</td>
+                    <td>+34.85%</td>
+                </tr>
+                <tr>
+                    <td><strong>Facilidad de uso</strong></td>
+                    <td>3.25</td>
+                    <td>3.79</td>
+                    <td>+0.54</td>
+                    <td>+16.67%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="result-box" style="background-color: #d1ecf1; border-color: #17a2b8;">
+            <h4 style="color: #0c5460;">Dimensiones críticas</h4>
+            <p><strong>✅ MAYOR MEJORA: Tiempo de respuesta</strong></p>
+            <ul>
+                <li>Preprueba: 2.38/5.00 (en desacuerdo)</li>
+                <li>Postprueba: 4.33/5.00 (de acuerdo)</li>
+                <li>Mejora: +1.96 puntos (+82.46%)</li>
+            </ul>
+            <p><strong>⚠️ MENOR MEJORA: Facilidad de uso</strong></p>
+            <ul>
+                <li>Preprueba: 3.25/5.00 (neutral-positivo)</li>
+                <li>Postprueba: 3.79/5.00 (de acuerdo)</li>
+                <li>Mejora: +0.54 puntos (+16.67%)</li>
+                <li>Nota: Ya partía de un nivel relativamente alto</li>
+            </ul>
+        </div>
+
+        <p><strong>Interpretación por dimensión:</strong> Todas las dimensiones mostraron mejoras positivas. Las dimensiones relacionadas con funcionalidad técnica del sistema (tiempo de respuesta, acceso a información, utilidad para decisiones, calidad de datos) mostraron mejoras superiores al 70%, mientras que aspectos relacionados con experiencia de usuario (facilidad de uso, soporte) tuvieron mejoras más moderadas, en parte porque ya partían de niveles más altos en la preprueba.</p>
+
+        <!-- Tabla Comparativa Mejora Global -->
+        <h3>Tabla comparativa: Preprueba vs Postprueba</h3>
+
+        <div class="table-caption">Tabla 4. Resumen comparativo de estadísticos clave</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Preprueba</th>
+                    <th>Postprueba</th>
+                    <th>Diferencia</th>
+                    <th>Cambio (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Media (1-5)</strong></td>
+                    <td>2.58</td>
+                    <td>4.06</td>
+                    <td>+1.49</td>
+                    <td>+57.68%</td>
+                </tr>
+                <tr>
+                    <td><strong>Mediana (1-5)</strong></td>
+                    <td>3.00</td>
+                    <td>4.00</td>
+                    <td>+1.00</td>
+                    <td>+33.33%</td>
+                </tr>
+                <tr>
+                    <td><strong>Desv. Estándar</strong></td>
+                    <td>0.60</td>
+                    <td>0.59</td>
+                    <td>-0.01</td>
+                    <td>-1.67%</td>
+                </tr>
+                <tr>
+                    <td><strong>CV (%)</strong></td>
+                    <td>23.22</td>
+                    <td>14.62</td>
+                    <td>-8.60</td>
+                    <td>-37.04%</td>
+                </tr>
+                <tr>
+                    <td><strong>Mínimo (1-5)</strong></td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>+2</td>
+                    <td>+200.00%</td>
+                </tr>
+                <tr>
+                    <td><strong>Máximo (1-5)</strong></td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>+1</td>
+                    <td>+25.00%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="improvement-highlight">
+            <p style="margin: 0; font-size: 16px; color: #0c5460;"><strong>Mejora Global Observada</strong></p>
+            <div class="improvement-value">+57.68%</div>
+            <p style="margin: 0; font-size: 14px; color: #0c5460;">Aumento absoluto: +1.49 puntos (escala 1-5)</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #0c5460;">IC 95%: [1.31, 1.66] puntos</p>
+        </div>
+
+        <!-- Gráficos -->
+        <h3>Visualizaciones gráficas</h3>
+
+        <h4>Boxplot comparativo</h4>
+        <div class="figure-container">
+            <img src="resultados_satisfaccion/01_boxplot_comparativo.png" alt="Boxplot Comparativo Preprueba vs Postprueba">
+            <p class="figure-caption">Figura 1. Comparación de distribuciones mediante diagramas de caja. Se observa un aumento notorio en la mediana y una concentración mayor de respuestas positivas en la postprueba.</p>
+        </div>
+
+        <h4>Gráfico de barras por dimensión</h4>
+        <div class="figure-container">
+            <img src="resultados_satisfaccion/02_barras_dimensiones.png" alt="Gráfico de Barras por Dimensión">
+            <p class="figure-caption">Figura 2. Comparación de promedios de satisfacción por dimensión. Todas las dimensiones muestran incrementos positivos, siendo "Tiempo de respuesta" la de mayor mejora.</p>
+        </div>
+
+        <h4>Gráfico de barras por responsable</h4>
+        <div class="figure-container">
+            <img src="resultados_satisfaccion/03_barras_responsables.png" alt="Gráfico de Barras por Responsable">
+            <p class="figure-caption">Figura 3. Comparación de promedios de satisfacción por responsable operativo. Todos los responsables reportaron incrementos en su nivel de satisfacción tras la implementación.</p>
+        </div>
+
+        <h4>Radar chart (gráfico radial)</h4>
+        <div class="figure-container">
+            <img src="resultados_satisfaccion/04_radar_chart.png" alt="Radar Chart de Dimensiones">
+            <p class="figure-caption">Figura 4. Gráfico radial comparando las 6 dimensiones. La expansión del polígono de postprueba (azul) respecto a preprueba (rojo) ilustra la mejora generalizada en todas las dimensiones.</p>
+        </div>
+
+        <h4>Mapa de calor (heatmap)</h4>
+        <div class="figure-container">
+            <img src="resultados_satisfaccion/05_heatmap_respuestas.png" alt="Heatmap de Respuestas">
+            <p class="figure-caption">Figura 5. Mapa de calor de las respuestas por responsable y pregunta. Los colores más cálidos (amarillos) en la postprueba indican mayor satisfacción comparado con los colores fríos (morados) en la preprueba.</p>
+        </div>
+
+        <h4>Histogramas de frecuencia</h4>
+        <div class="figure-container">
+            <img src="resultados_satisfaccion/06_histogramas_frecuencia.png" alt="Histogramas de Frecuencia">
+            <p class="figure-caption">Figura 6. Histogramas de frecuencia de respuestas. En preprueba predominan respuestas neutras y negativas (1-3), mientras que en postprueba predominan respuestas positivas (4-5).</p>
+        </div>
+
+        <!-- Datos Crudos -->
+        <h3>Datos crudos de respuestas registradas</h3>
+
+        <h4>Datos de preprueba (antes del sistema)</h4>
+        <div class="data-table-container">
+            <div class="table-caption">Tabla 5. Respuestas individuales durante la preprueba (n = 8 responsables)</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cargo</th>
+                        <th>Turno</th>
+                        <th>P1</th>
+                        <th>P2</th>
+                        <th>P3</th>
+                        <th>P4</th>
+                        <th>P5</th>
+                        <th>P6</th>
+                        <th>P7</th>
+                        <th>P8</th>
+                        <th>P9</th>
+                        <th>P10</th>
+                        <th>P11</th>
+                        <th>P12</th>
+                        <th>P13</th>
+                        <th>P14</th>
+                        <th>P15</th>
+                        <th>P16</th>
+                        <th>P17</th>
+                        <th>P18</th>
+                        <th>Promedio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>R01</td>
+                        <td>Jefe de Producción</td>
+                        <td>N/A</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2.67</td>
+                    </tr>
+                    <tr>
+                        <td>R02</td>
+                        <td>Supervisor Corte</td>
+                        <td>Mañana</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>2.56</td>
+                    </tr>
+                    <tr>
+                        <td>R03</td>
+                        <td>Supervisor Formado</td>
+                        <td>Tarde</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2.61</td>
+                    </tr>
+                    <tr>
+                        <td>R04</td>
+                        <td>Supervisor Sellado</td>
+                        <td>Noche</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2.22</td>
+                    </tr>
+                    <tr>
+                        <td>R05</td>
+                        <td>Jefe Turno Mañana</td>
+                        <td>Mañana</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2.94</td>
+                    </tr>
+                    <tr>
+                        <td>R06</td>
+                        <td>Jefe Turno Tarde</td>
+                        <td>Tarde</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2.56</td>
+                    </tr>
+                    <tr>
+                        <td>R07</td>
+                        <td>Jefe Turno Noche</td>
+                        <td>Noche</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>2.28</td>
+                    </tr>
+                    <tr>
+                        <td>R08</td>
+                        <td>Ingeniero de Proceso</td>
+                        <td>N/A</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3.11</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Datos de postprueba (después del sistema)</h4>
+        <div class="data-table-container">
+            <div class="table-caption">Tabla 6. Respuestas individuales durante la postprueba (n = 8 responsables)</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cargo</th>
+                        <th>Turno</th>
+                        <th>P1</th>
+                        <th>P2</th>
+                        <th>P3</th>
+                        <th>P4</th>
+                        <th>P5</th>
+                        <th>P6</th>
+                        <th>P7</th>
+                        <th>P8</th>
+                        <th>P9</th>
+                        <th>P10</th>
+                        <th>P11</th>
+                        <th>P12</th>
+                        <th>P13</th>
+                        <th>P14</th>
+                        <th>P15</th>
+                        <th>P16</th>
+                        <th>P17</th>
+                        <th>P18</th>
+                        <th>Promedio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>R01</td>
+                        <td>Jefe de Producción</td>
+                        <td>N/A</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4.56</td>
+                    </tr>
+                    <tr>
+                        <td>R02</td>
+                        <td>Supervisor Corte</td>
+                        <td>Mañana</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4.17</td>
+                    </tr>
+                    <tr>
+                        <td>R03</td>
+                        <td>Supervisor Formado</td>
+                        <td>Tarde</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>3.89</td>
+                    </tr>
+                    <tr>
+                        <td>R04</td>
+                        <td>Supervisor Sellado</td>
+                        <td>Noche</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3.44</td>
+                    </tr>
+                    <tr>
+                        <td>R05</td>
+                        <td>Jefe Turno Mañana</td>
+                        <td>Mañana</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4.44</td>
+                    </tr>
+                    <tr>
+                        <td>R06</td>
+                        <td>Jefe Turno Tarde</td>
+                        <td>Tarde</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>4.00</td>
+                    </tr>
+                    <tr>
+                        <td>R07</td>
+                        <td>Jefe Turno Noche</td>
+                        <td>Noche</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>3.72</td>
+                    </tr>
+                    <tr>
+                        <td>R08</td>
+                        <td>Ingeniero de Proceso</td>
+                        <td>N/A</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4.78</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- 4.1.2.2 ANÁLISIS INFERENCIAL -->
+        <!-- ============================================ -->
+
+        <h2><span class="section-number">4.1.2.2</span> Análisis Inferencial</h2>
+
+        <p>El análisis inferencial permite determinar si las diferencias observadas entre las fases de preprueba y postprueba son estadísticamente significativas, o si podrían atribuirse al azar. Se aplicaron pruebas de normalidad, pruebas de hipótesis paramétricas y no paramétricas, y se calculó el tamaño del efecto.</p>
+
+        <!-- Consideraciones Especiales -->
+        <div class="highlight-box" style="background-color: #fff3cd; border-left-color: #856404;">
+            <strong style="color: #856404;">⚠️ Consideraciones metodológicas importantes:</strong><br><br>
+            <strong>Naturaleza de los datos Likert:</strong> Los datos provenientes de escalas Likert (1-5) son por definición <strong>ORDINALES</strong>, no cuantitativos continuos. Aunque es común en la práctica investigativa tratarlos como cuantitativos para análisis estadísticos, técnicamente las pruebas no paramétricas son más apropiadas para este tipo de datos.<br><br>
+            <strong>Recomendación metodológica:</strong> Se priorizarán los resultados de la <strong>prueba de Wilcoxon</strong> (no paramétrica) como evidencia principal, utilizando la prueba t de Student (paramétrica) como análisis complementario para mayor robustez.
+        </div>
+
+        <!-- Prueba de Normalidad -->
+        <h3>Prueba de normalidad (Shapiro-Wilk)</h3>
+
+        <p>Previo a la selección de la prueba de hipótesis apropiada, se evaluó el supuesto de normalidad mediante la prueba de Shapiro-Wilk, que contrasta la hipótesis de que los datos provienen de una distribución normal.</p>
+
+        <div class="highlight-box">
+            <strong>Hipótesis de la prueba de normalidad:</strong><br>
+            <strong>H₀:</strong> Los datos provienen de una distribución normal<br>
+            <strong>H₁:</strong> Los datos NO provienen de una distribución normal<br>
+            <strong>Nivel de significancia:</strong> α = 0.05
+        </div>
+
+        <div class="table-caption">Tabla 7. Resultados de la prueba de normalidad Shapiro-Wilk</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Conjunto de Datos</th>
+                    <th>Estadístico W</th>
+                    <th>p-valor</th>
+                    <th>Decisión (α=0.05)</th>
+                    <th>Interpretación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Preprueba (promedios)</strong></td>
+                    <td>0.9292</td>
+                    <td>0.5090</td>
+                    <td>NO RECHAZAR H₀</td>
+                    <td>Distribución NORMAL</td>
+                </tr>
+                <tr>
+                    <td><strong>Postprueba (promedios)</strong></td>
+                    <td>0.9879</td>
+                    <td>0.9912</td>
+                    <td>NO RECHAZAR H₀</td>
+                    <td>Distribución NORMAL</td>
+                </tr>
+                <tr>
+                    <td><strong>Diferencias pareadas</strong></td>
+                    <td>0.9391</td>
+                    <td>0.6025</td>
+                    <td>NO RECHAZAR H₀</td>
+                    <td>Distribución NORMAL</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación de normalidad:</strong> Los resultados de la prueba de Shapiro-Wilk indican que las distribuciones de los promedios individuales de preprueba (p = 0.509), postprueba (p = 0.991), y las diferencias pareadas (p = 0.603) NO presentan desviaciones significativas respecto a la distribución normal (p > 0.05 en todos los casos). Desde un punto de vista estadístico paramétrico, esto validaría el uso de la prueba t de Student.</p>
+
+        <div class="result-box" style="background-color: #fff3cd; border-color: #856404;">
+            <h4 style="color: #856404;">Decisión metodológica</h4>
+            <p style="margin: 0;"><strong>Sin embargo,</strong> dado que los datos provienen de una escala Likert (datos ORDINALES por naturaleza), se recomienda priorizar la <strong>prueba de Wilcoxon para rangos con signo</strong>, alternativa no paramétrica que es más apropiada para este tipo de datos. La prueba t de Student se presenta como análisis complementario para mayor robustez en las conclusiones.</p>
+        </div>
+
+        <!-- Prueba de Wilcoxon -->
+        <h3>Prueba de Wilcoxon para rangos con signo (no paramétrica - RECOMENDADA)</h3>
+
+        <p>La prueba de Wilcoxon es la alternativa no paramétrica más apropiada para datos ordinales provenientes de escalas Likert. Esta prueba compara las medianas de dos muestras relacionadas basándose en los rangos de las diferencias, sin asumir distribución normal ni escala de intervalos.</p>
+
+        <div class="highlight-box">
+            <strong>Hipótesis estadística:</strong><br>
+            <strong>H₀:</strong> La mediana de las diferencias es cero (no hay cambio en satisfacción)<br>
+            <strong>H₁:</strong> La mediana de las diferencias es diferente de cero (hay cambio significativo)<br>
+            <strong>Nivel de significancia:</strong> α = 0.05<br>
+            <strong>Prueba:</strong> Bilateral
+        </div>
+
+        <div class="table-caption">Tabla 8. Resultados de la prueba de Wilcoxon</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Estadístico W</strong></td>
+                    <td>0.0000</td>
+                </tr>
+                <tr>
+                    <td><strong>p-valor (bilateral)</strong></td>
+                    <td>0.007812</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisión (α=0.05)</strong></td>
+                    <td>RECHAZAR H₀</td>
+                </tr>
+                <tr>
+                    <td><strong>Conclusión</strong></td>
+                    <td>Diferencia estadísticamente SIGNIFICATIVA</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación:</strong> El estadístico de Wilcoxon (W = 0) indica que TODOS los responsables (8 de 8) presentaron incrementos positivos en su nivel de satisfacción tras la implementación del sistema, sin excepciones. El p-valor de 0.007812 es inferior al nivel de significancia establecido (α = 0.05), lo que proporciona evidencia fuerte para rechazar la hipótesis nula y concluir que existe una diferencia estadísticamente significativa en el nivel de satisfacción antes y después de la implementación.</p>
+
+        <!-- Prueba t de Student -->
+        <h3>Prueba t de Student pareada (paramétrica - COMPLEMENTARIA)</h3>
+
+        <p>La prueba t de Student para muestras pareadas evalúa si existe diferencia significativa entre las medias de dos grupos relacionados. Se presenta como análisis complementario, aunque los datos Likert son técnicamente ordinales.</p>
+
+        <div class="highlight-box">
+            <strong>Hipótesis estadística:</strong><br>
+            <strong>H₀:</strong> μ<sub>preprueba</sub> = μ<sub>postprueba</sub> (no hay diferencia en las medias)<br>
+            <strong>H₁:</strong> μ<sub>preprueba</sub> ≠ μ<sub>postprueba</sub> (existe diferencia significativa)<br>
+            <strong>Nivel de significancia:</strong> α = 0.05<br>
+            <strong>Prueba:</strong> Bilateral
+        </div>
+
+        <div class="table-caption">Tabla 9. Resultados de la prueba t de Student pareada</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Estadístico t</strong></td>
+                    <td>-19.6765</td>
+                </tr>
+                <tr>
+                    <td><strong>Grados de libertad (gl)</strong></td>
+                    <td>7</td>
+                </tr>
+                <tr>
+                    <td><strong>p-valor (bilateral)</strong></td>
+                    <td>&lt; 0.000001</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisión (α=0.05)</strong></td>
+                    <td>RECHAZAR H₀</td>
+                </tr>
+                <tr>
+                    <td><strong>Conclusión</strong></td>
+                    <td>Diferencia estadísticamente SIGNIFICATIVA</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación:</strong> El valor del estadístico t (-19.68) es extremadamente alto en magnitud, con un p-valor prácticamente cero (p < 0.000001), muy inferior al nivel de significancia establecido (α = 0.05). Esto proporciona evidencia contundente para rechazar la hipótesis nula y concluir que existe una diferencia estadísticamente significativa entre las medias de preprueba y postprueba.</p>
+
+        <div class="result-box">
+            <h4>Conclusión de las pruebas de hipótesis</h4>
+            <p><strong>Tanto la prueba paramétrica (t de Student) como la no paramétrica (Wilcoxon) convergen en la misma conclusión:</strong> existe evidencia estadística altamente significativa de que la implementación del sistema incrementó el nivel de satisfacción de los responsables operativos. Dado que los datos Likert son ordinales, se considera la <strong>prueba de Wilcoxon (p = 0.007812) como el resultado primario</strong>, aunque ambas pruebas corroboran la significancia estadística de manera contundente.</p>
+        </div>
+
+        <!-- Tamaño del Efecto -->
+        <h3>Tamaño del efecto</h3>
+
+        <p>Además de la significancia estadística, es fundamental evaluar la <strong>significancia práctica</strong> o magnitud del efecto. El tamaño del efecto cuantifica la magnitud de la diferencia observada, independientemente del tamaño muestral, permitiendo evaluar la relevancia práctica del hallazgo.</p>
+
+        <p>Se calcularon dos medidas del tamaño del efecto: <strong>d de Cohen</strong> (para muestras pareadas) y <strong>r de Rosenthal</strong> (específica para la prueba de Wilcoxon).</p>
+
+        <div class="highlight-box">
+            <strong>Criterios de interpretación:</strong><br><br>
+            <strong>d de Cohen (Cohen, 1988):</strong><br>
+            • d < 0.2 → Efecto insignificante<br>
+            • 0.2 ≤ d < 0.5 → Efecto pequeño<br>
+            • 0.5 ≤ d < 0.8 → Efecto mediano<br>
+            • d ≥ 0.8 → Efecto grande<br><br>
+            <strong>r de Rosenthal:</strong><br>
+            • r < 0.1 → Efecto pequeño<br>
+            • 0.1 ≤ r < 0.3 → Efecto mediano<br>
+            • 0.3 ≤ r < 0.5 → Efecto grande<br>
+            • r ≥ 0.5 → Efecto muy grande
+        </div>
+
+        <div class="table-caption">Tabla 10. Tamaño del efecto y su interpretación</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Medida</th>
+                    <th>Valor</th>
+                    <th>Interpretación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>d de Cohen (pareadas)</strong></td>
+                    <td>6.9567</td>
+                    <td><strong>Efecto MUY GRANDE (d ≥ 0.8)</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>r de Rosenthal (Wilcoxon)</strong></td>
+                    <td>0.9405</td>
+                    <td><strong>Efecto MUY GRANDE (r ≥ 0.5)</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Diferencia media</strong></td>
+                    <td>1.49 puntos</td>
+                    <td>Aumento promedio observado (escala 1-5)</td>
+                </tr>
+                <tr>
+                    <td><strong>Porcentaje de mejora</strong></td>
+                    <td>57.68%</td>
+                    <td>Incremento relativo respecto al baseline</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación del tamaño del efecto:</strong> Ambas medidas del tamaño del efecto son <strong>extraordinariamente altas</strong>. El valor de d de Cohen = 6.96 supera ampliamente el umbral de 0.8 para efectos grandes, mientras que r de Rosenthal = 0.94 también indica un efecto muy grande (r ≥ 0.5). Esto indica que el incremento en el nivel de satisfacción no solo es estadísticamente significativo, sino que tiene una <strong>relevancia práctica sustancial y excepcional</strong>. Un valor de d > 6 es muy poco común en investigación aplicada y sugiere que la intervención (implementación del sistema) produjo un cambio de magnitud extraordinaria en la satisfacción de los responsables operativos.</p>
+
+        <!-- Intervalo de Confianza -->
+        <h3>Intervalo de confianza para la diferencia de medias</h3>
+
+        <p>El intervalo de confianza proporciona un rango de valores plausibles para la verdadera diferencia poblacional entre las medias de preprueba y postprueba, con un nivel de confianza del 95%.</p>
+
+        <div class="table-caption">Tabla 11. Intervalo de confianza al 95% para la diferencia de medias</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parámetro</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Diferencia de medias</strong></td>
+                    <td>1.49 puntos</td>
+                </tr>
+                <tr>
+                    <td><strong>Error estándar</strong></td>
+                    <td>0.08 puntos</td>
+                </tr>
+                <tr>
+                    <td><strong>t crítico (gl=7, α=0.05)</strong></td>
+                    <td>2.3646</td>
+                </tr>
+                <tr>
+                    <td><strong>IC 95%</strong></td>
+                    <td>[1.31, 1.66] puntos</td>
+                </tr>
+                <tr>
+                    <td><strong>Amplitud del intervalo</strong></td>
+                    <td>0.35 puntos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación del intervalo de confianza:</strong> Con un 95% de confianza, el verdadero incremento promedio en el nivel de satisfacción poblacional se encuentra entre 1.31 y 1.66 puntos (en una escala de 1 a 5). Es importante destacar que:</p>
+
+        <ul>
+            <li>El intervalo <strong>NO contiene el cero</strong>, lo que confirma la significancia estadística de la diferencia.</li>
+            <li>El límite inferior (1.31 puntos) indica que, en el peor escenario, el incremento es de al menos 1.31 puntos.</li>
+            <li>El límite superior (1.66 puntos) sugiere que el incremento podría ser hasta de 1.66 puntos.</li>
+            <li>La amplitud relativamente estrecha del intervalo (0.35 puntos) refleja una <strong>precisión razonable</strong> de la estimación, considerando el tamaño muestral pequeño (n=8).</li>
+        </ul>
+
+        <!-- Análisis por Dimensión -->
+        <h3>Análisis de significancia estadística por dimensión</h3>
+
+        <p>Se realizó un análisis de significancia para cada una de las 6 dimensiones evaluadas, utilizando la prueba de Wilcoxon y calculando el tamaño del efecto (d de Cohen) para cada dimensión específica.</p>
+
+        <div class="table-caption">Tabla 12. Significancia estadística por dimensión (prueba de Wilcoxon)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Dimensión</th>
+                    <th>W</th>
+                    <th>p-valor</th>
+                    <th>Significativo (α=0.05)</th>
+                    <th>d de Cohen</th>
+                    <th>Tamaño Efecto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Acceso a información</strong></td>
+                    <td>0.0000</td>
+                    <td>0.007812</td>
+                    <td>✅ SÍ</td>
+                    <td>7.2758</td>
+                    <td>GRANDE</td>
+                </tr>
+                <tr>
+                    <td><strong>Calidad de datos</strong></td>
+                    <td>0.0000</td>
+                    <td>0.007812</td>
+                    <td>✅ SÍ</td>
+                    <td>10.3855</td>
+                    <td>GRANDE</td>
+                </tr>
+                <tr>
+                    <td><strong>Facilidad de uso</strong></td>
+                    <td>0.0000</td>
+                    <td>0.015625</td>
+                    <td>✅ SÍ</td>
+                    <td>1.5321</td>
+                    <td>GRANDE</td>
+                </tr>
+                <tr>
+                    <td><strong>Utilidad para decisiones</strong></td>
+                    <td>0.0000</td>
+                    <td>0.007812</td>
+                    <td>✅ SÍ</td>
+                    <td>7.2758</td>
+                    <td>GRANDE</td>
+                </tr>
+                <tr>
+                    <td><strong>Tiempo de respuesta</strong></td>
+                    <td>0.0000</td>
+                    <td>0.007812</td>
+                    <td>✅ SÍ</td>
+                    <td>4.3319</td>
+                    <td>GRANDE</td>
+                </tr>
+                <tr>
+                    <td><strong>Soporte general</strong></td>
+                    <td>0.0000</td>
+                    <td>0.007812</td>
+                    <td>✅ SÍ</td>
+                    <td>4.4861</td>
+                    <td>GRANDE</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación por dimensión:</strong> <strong>TODAS las 6 dimensiones</strong> mostraron diferencias estadísticamente significativas (p < 0.05) tras la implementación del sistema. Además, todas las dimensiones presentaron tamaños del efecto "GRANDES" (d ≥ 0.8), lo que indica que las mejoras no solo son estadísticamente significativas, sino también prácticamente relevantes en todos los aspectos evaluados. Destaca especialmente la dimensión "Calidad de datos" con d = 10.39, el mayor tamaño del efecto observado.</p>
+
+        <!-- Fiabilidad del Instrumento -->
+        <h3>Fiabilidad del instrumento (Alpha de Cronbach)</h3>
+
+        <p>Se evaluó la consistencia interna del cuestionario mediante el coeficiente Alpha de Cronbach, que mide el grado en que los 18 ítems del cuestionario miden de forma coherente el constructo de "satisfacción".</p>
+
+        <div class="highlight-box">
+            <strong>Criterios de interpretación (Cronbach's Alpha):</strong><br>
+            • α < 0.60 → Inaceptable<br>
+            • 0.60 ≤ α < 0.70 → Cuestionable<br>
+            • 0.70 ≤ α < 0.80 → Aceptable<br>
+            • 0.80 ≤ α < 0.90 → Bueno<br>
+            • α ≥ 0.90 → Excelente
+        </div>
+
+        <div class="table-caption">Tabla 13. Coeficiente Alpha de Cronbach</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fase</th>
+                    <th>Alpha de Cronbach</th>
+                    <th>Número de ítems</th>
+                    <th>Interpretación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Preprueba</strong></td>
+                    <td>0.9146</td>
+                    <td>18</td>
+                    <td>EXCELENTE</td>
+                </tr>
+                <tr>
+                    <td><strong>Postprueba</strong></td>
+                    <td>0.9632</td>
+                    <td>18</td>
+                    <td>EXCELENTE</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación de fiabilidad:</strong> El cuestionario de satisfacción utilizado presenta una consistencia interna <strong>EXCELENTE</strong> en ambas fases (α > 0.90). Esto indica que los 18 ítems miden de forma confiable y coherente el constructo de satisfacción de los responsables operativos. La alta fiabilidad del instrumento fortalece la validez de los resultados obtenidos y confirma que el cuestionario es una herramienta de medición robusta y confiable.</p>
+
+        <!-- Interpretación Integral -->
+        <h3>Interpretación integral de resultados</h3>
+
+        <div class="result-box">
+            <h4>Síntesis de hallazgos estadísticos</h4>
+
+            <p><strong>1. Significancia estadística:</strong></p>
+            <p>Se rechaza la hipótesis nula con evidencia altamente significativa (p = 0.007812 en Wilcoxon, p < 0.000001 en t-test). Tanto la prueba paramétrica como la no paramétrica confirman que la diferencia observada entre preprueba y postprueba NO puede atribuirse al azar.</p>
+
+            <p><strong>2. Magnitud del efecto:</strong></p>
+            <p>El tamaño del efecto es extraordinario: d de Cohen = 6.96 y r de Rosenthal = 0.94, ambos indicando un efecto MUY GRANDE. Esta magnitud excepcional sugiere que la implementación del sistema produjo un impacto SUSTANCIAL en el nivel de satisfacción de los responsables operativos.</p>
+
+            <p><strong>3. Relevancia práctica:</strong></p>
+            <p>El incremento promedio de 1.49 puntos en una escala de 1-5 (equivalente a +57.68%) representa una mejora operativa considerable. Esta mejora implica que la satisfacción pasó de un nivel "neutral-negativo" (2.58) a un nivel "satisfactorio-positivo" (4.06), con impactos directos en:</p>
+            <ul>
+                <li>Mayor confianza de los responsables en el sistema implementado</li>
+                <li>Mejor percepción de la calidad, acceso y utilidad de la información</li>
+                <li>Incremento en la percepción de eficiencia operativa</li>
+                <li>Validación del sistema como herramienta efectiva de gestión</li>
+            </ul>
+
+            <p><strong>4. Consistencia por dimensiones:</strong></p>
+            <p>TODAS las 6 dimensiones evaluadas (Acceso a información, Calidad de datos, Facilidad de uso, Utilidad para decisiones, Tiempo de respuesta, Soporte general) mostraron mejoras estadísticamente significativas (p < 0.05) y tamaños del efecto grandes (d ≥ 0.8). Esto indica que el sistema impactó positivamente en múltiples aspectos de la experiencia del usuario.</p>
+
+            <p><strong>5. Fiabilidad del instrumento:</strong></p>
+            <p>El cuestionario demostró consistencia interna EXCELENTE (α > 0.91 en ambas fases), lo que fortalece la validez y confiabilidad de las mediciones realizadas.</p>
+
+            <p><strong>6. Consistencia de resultados:</strong></p>
+            <p>El estadístico de Wilcoxon (W = 0) revela que el 100% de los responsables (8 de 8) reportaron incrementos en su nivel de satisfacción tras la implementación, sin excepciones. Esta consistencia perfecta subraya la robustez y generalización del efecto observado entre todos los participantes.</p>
+        </div>
+
+        <div class="highlight-box" style="background-color: #d4edda; border-left-color: #28a745;">
+            <strong style="color: #155724; font-size: 16px;">CONCLUSIÓN FINAL</strong><br><br>
+            Los resultados del análisis estadístico proporcionan <strong>evidencia contundente</strong> de que la implementación del sistema de gestión incrementó significativamente el nivel de satisfacción de los responsables operativos. La combinación de:
+            <ul style="margin-top: 10px;">
+                <li>Significancia estadística muy alta (p = 0.007812 en Wilcoxon, p < 0.000001 en t-test)</li>
+                <li>Tamaño del efecto extraordinariamente grande (d = 6.96, r = 0.94)</li>
+                <li>Incremento sustancial y prácticamente relevante (+57.68%, +1.49 puntos)</li>
+                <li>Consistencia perfecta en todos los responsables (W = 0, 8 de 8 con mejoras)</li>
+                <li>Significancia en TODAS las dimensiones evaluadas (6 de 6)</li>
+                <li>Intervalo de confianza preciso y alejado de cero [1.31, 1.66]</li>
+                <li>Fiabilidad excelente del instrumento (α > 0.91)</li>
+            </ul>
+            <strong style="color: #155724;">VALIDAN LA HIPÓTESIS DE INVESTIGACIÓN</strong>, demostrando que el sistema implementado mejoró significativamente la satisfacción de los usuarios finales, con implicaciones prácticas de alto impacto para la organización y evidencia de una exitosa adopción del sistema por parte de los responsables operativos.
+        </div>
+
+        <!-- Footer -->
+        <div style="margin-top: 60px; padding-top: 20px; border-top: 2px solid #3498db; text-align: center; color: #7f8c8d; font-size: 12px;">
+            <p><strong>Análisis Estadístico Indicador de Satisfacción</strong></p>
+            <p>Documento generado: Octubre 2025</p>
+            <p>Datos analizados: n = 8 responsables operativos (censo completo) | 18 preguntas | 6 dimensiones</p>
+            <p style="margin-top: 10px; font-style: italic;">Software utilizado: Python (pandas, scipy, matplotlib, seaborn)</p>
+        </div>
+
+    </div>
+</body>
+</html>

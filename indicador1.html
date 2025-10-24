@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicador TREC - Análisis Estadístico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            background-color: white;
+            padding: 60px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 22px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        h4 {
+            color: #34495e;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        p {
+            text-align: justify;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .metadata {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 13px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        thead {
+            background-color: #3498db;
+            color: white;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        tbody tr:hover {
+            background-color: #e8f4f8;
+        }
+
+        .table-caption {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .figure-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .figure-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .figure-caption {
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #2c3e50;
+            font-style: italic;
+        }
+
+        .highlight-box {
+            background-color: #ecf0f1;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 25px 0;
+            font-size: 14px;
+        }
+
+        .highlight-box strong {
+            color: #2c3e50;
+        }
+
+        .result-box {
+            background-color: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .result-box h4 {
+            color: #155724;
+            margin-top: 0;
+        }
+
+        ul {
+            margin-left: 40px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .section-number {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .stat-card h4 {
+            margin-top: 0;
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .stat-value {
+            color: #212529;
+            font-family: 'Courier New', monospace;
+        }
+
+        .improvement-highlight {
+            background-color: #d1ecf1;
+            border: 2px solid #17a2b8;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .improvement-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0c5460;
+            margin: 10px 0;
+        }
+
+        .data-table-container {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        .data-table {
+            font-size: 11px;
+        }
+
+        .data-table th {
+            background-color: #2c3e50;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Título Principal -->
+        <h1>Análisis Estadístico del Indicador TREC</h1>
+        <h1 style="font-size: 22px; margin-top: 10px;">Tiempo de Respuesta ante Eventos Correctivos</h1>
+
+        <div class="metadata">
+            Fecha del análisis: Octubre 2025<br>
+            Investigación: Tesis de Ingeniería<br>
+            Diseño: Estudio cuasi-experimental con mediciones pre-post<br>
+            Tamaño muestral: n = 86 eventos pareados
+        </div>
+
+        <!-- Introducción -->
+        <div class="highlight-box">
+            <strong>Objetivo del estudio:</strong> Evaluar el impacto de la implementación de un sistema de gestión en el tiempo de respuesta ante eventos correctivos (TREC) en un entorno de producción industrial. Se comparan mediciones realizadas antes (preprueba) y después (postprueba) de la implementación del sistema.
+        </div>
+
+        <p><strong>Periodo de preprueba:</strong> Noviembre - Diciembre 2024 (antes de implementar el sistema)</p>
+        <p><strong>Periodo de postprueba:</strong> Enero - Febrero 2025 (después de implementar el sistema)</p>
+        <p><strong>Variable medida:</strong> Tiempo de respuesta en minutos (cuantitativa continua)</p>
+
+        <!-- ============================================ -->
+        <!-- 4.1.2.1 ANÁLISIS DESCRIPTIVO -->
+        <!-- ============================================ -->
+
+        <h2><span class="section-number">4.1.2.1</span> Análisis Descriptivo</h2>
+
+        <p>El análisis descriptivo permite caracterizar las distribuciones de los tiempos de respuesta en ambas fases del estudio, identificando tendencias centrales, dispersión y valores atípicos. A continuación se presentan los estadísticos clave para la preprueba y postprueba.</p>
+
+        <!-- Estadísticos Preprueba -->
+        <h3>Estadísticos descriptivos: Preprueba</h3>
+        <p>Los datos de preprueba corresponden a 86 eventos correctivos registrados durante noviembre y diciembre de 2024, antes de la implementación del sistema. La Tabla 1 presenta los estadísticos descriptivos completos.</p>
+
+        <div class="table-caption">Tabla 1. Estadísticos descriptivos de la fase preprueba (n = 86)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Valor</th>
+                    <th>Unidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tamaño de muestra (n)</strong></td>
+                    <td>86</td>
+                    <td>eventos</td>
+                </tr>
+                <tr>
+                    <td><strong>Media aritmética (μ)</strong></td>
+                    <td>64.63</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Mediana (Me)</strong></td>
+                    <td>62.85</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Desviación estándar (σ)</strong></td>
+                    <td>14.24</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Varianza (σ²)</strong></td>
+                    <td>202.90</td>
+                    <td>min²</td>
+                </tr>
+                <tr>
+                    <td><strong>Mínimo</strong></td>
+                    <td>42.70</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Cuartil 1 (Q1)</strong></td>
+                    <td>52.95</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Cuartil 3 (Q3)</strong></td>
+                    <td>74.80</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Máximo</strong></td>
+                    <td>95.40</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Rango</strong></td>
+                    <td>52.70</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Rango intercuartílico (IQR)</strong></td>
+                    <td>21.85</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Coeficiente de variación (CV)</strong></td>
+                    <td>22.04</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td><strong>Error estándar (SE)</strong></td>
+                    <td>1.54</td>
+                    <td>minutos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación preprueba:</strong> El tiempo promedio de respuesta ante eventos correctivos fue de 64.63 minutos (σ = 14.24), con una mediana de 62.85 minutos, indicando una distribución relativamente simétrica. El coeficiente de variación del 22.04% sugiere una dispersión moderada. Los tiempos oscilaron entre 42.70 y 95.40 minutos, con un rango de 52.70 minutos.</p>
+
+        <!-- Estadísticos Postprueba -->
+        <h3>Estadísticos descriptivos: Postprueba</h3>
+        <p>Los datos de postprueba corresponden a 86 eventos correctivos registrados durante enero y febrero de 2025, después de implementar el sistema. La Tabla 2 presenta los estadísticos descriptivos completos.</p>
+
+        <div class="table-caption">Tabla 2. Estadísticos descriptivos de la fase postprueba (n = 86)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Valor</th>
+                    <th>Unidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tamaño de muestra (n)</strong></td>
+                    <td>86</td>
+                    <td>eventos</td>
+                </tr>
+                <tr>
+                    <td><strong>Media aritmética (μ)</strong></td>
+                    <td>24.97</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Mediana (Me)</strong></td>
+                    <td>24.60</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Desviación estándar (σ)</strong></td>
+                    <td>5.31</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Varianza (σ²)</strong></td>
+                    <td>28.24</td>
+                    <td>min²</td>
+                </tr>
+                <tr>
+                    <td><strong>Mínimo</strong></td>
+                    <td>16.20</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Cuartil 1 (Q1)</strong></td>
+                    <td>20.56</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Cuartil 3 (Q3)</strong></td>
+                    <td>28.68</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Máximo</strong></td>
+                    <td>36.40</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Rango</strong></td>
+                    <td>20.20</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Rango intercuartílico (IQR)</strong></td>
+                    <td>8.11</td>
+                    <td>minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Coeficiente de variación (CV)</strong></td>
+                    <td>21.28</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td><strong>Error estándar (SE)</strong></td>
+                    <td>0.57</td>
+                    <td>minutos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación postprueba:</strong> Tras la implementación del sistema, el tiempo promedio de respuesta se redujo a 24.97 minutos (σ = 5.31), con una mediana de 24.60 minutos. La desviación estándar disminuyó notablemente respecto a la preprueba, indicando mayor consistencia en los tiempos de respuesta. El coeficiente de variación de 21.28% se mantuvo similar, pero en una escala de valores mucho menor.</p>
+
+        <!-- Tabla Comparativa -->
+        <h3>Tabla comparativa: Preprueba vs Postprueba</h3>
+        <p>La Tabla 3 presenta una comparación directa de los estadísticos clave entre ambas fases, facilitando la evaluación del cambio observado tras la implementación del sistema.</p>
+
+        <div class="table-caption">Tabla 3. Comparación de estadísticos descriptivos entre preprueba y postprueba</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Preprueba</th>
+                    <th>Postprueba</th>
+                    <th>Diferencia</th>
+                    <th>Cambio (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Media (min)</strong></td>
+                    <td>64.63</td>
+                    <td>24.97</td>
+                    <td>-39.66</td>
+                    <td>-61.37%</td>
+                </tr>
+                <tr>
+                    <td><strong>Mediana (min)</strong></td>
+                    <td>62.85</td>
+                    <td>24.60</td>
+                    <td>-38.25</td>
+                    <td>-60.86%</td>
+                </tr>
+                <tr>
+                    <td><strong>Desv. Estándar (min)</strong></td>
+                    <td>14.24</td>
+                    <td>5.31</td>
+                    <td>-8.93</td>
+                    <td>-62.71%</td>
+                </tr>
+                <tr>
+                    <td><strong>CV (%)</strong></td>
+                    <td>22.04</td>
+                    <td>21.28</td>
+                    <td>-0.76</td>
+                    <td>-3.45%</td>
+                </tr>
+                <tr>
+                    <td><strong>Mínimo (min)</strong></td>
+                    <td>42.70</td>
+                    <td>16.20</td>
+                    <td>-26.50</td>
+                    <td>-62.06%</td>
+                </tr>
+                <tr>
+                    <td><strong>Máximo (min)</strong></td>
+                    <td>95.40</td>
+                    <td>36.40</td>
+                    <td>-59.00</td>
+                    <td>-61.84%</td>
+                </tr>
+                <tr>
+                    <td><strong>Rango (min)</strong></td>
+                    <td>52.70</td>
+                    <td>20.20</td>
+                    <td>-32.50</td>
+                    <td>-61.67%</td>
+                </tr>
+                <tr>
+                    <td><strong>IQR (min)</strong></td>
+                    <td>21.85</td>
+                    <td>8.11</td>
+                    <td>-13.74</td>
+                    <td>-62.89%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="improvement-highlight">
+            <p style="margin: 0; font-size: 16px; color: #0c5460;"><strong>Mejora Observada</strong></p>
+            <div class="improvement-value">-61.37%</div>
+            <p style="margin: 0; font-size: 14px; color: #0c5460;">Reducción absoluta: 39.66 minutos</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #0c5460;">IC 95%: [37.74, 41.58] minutos</p>
+        </div>
+
+        <p><strong>Interpretación comparativa:</strong> Se observa una reducción sustancial en el tiempo de respuesta promedio de 39.66 minutos, equivalente a una mejora del 61.37%. Además, la desviación estándar disminuyó en 8.93 minutos (62.71%), indicando no solo tiempos más rápidos, sino también mayor consistencia y predictibilidad en las respuestas. El coeficiente de variación se mantuvo relativamente estable, sugiriendo que la variabilidad relativa es similar, pero en una escala temporal significativamente menor.</p>
+
+        <!-- Gráficos -->
+        <h3>Visualizaciones gráficas</h3>
+
+        <h4>Boxplot comparativo</h4>
+        <div class="figure-container">
+            <img src="resultados_trec/01_boxplot_comparativo.png" alt="Boxplot Comparativo Preprueba vs Postprueba">
+            <p class="figure-caption">Figura 1. Comparación de distribuciones mediante diagramas de caja. Se observa una reducción drástica tanto en la mediana como en la dispersión de los tiempos de respuesta tras la implementación del sistema. Los puntos individuales muestran la distribución de cada evento registrado.</p>
+        </div>
+
+        <p>El diagrama de caja (Figura 1) revela visualmente la magnitud del cambio: la caja de la postprueba se encuentra completamente por debajo de la caja de la preprueba, sin superposición entre los rangos intercuartílicos. Esto sugiere una separación clara entre las distribuciones de ambas fases.</p>
+
+        <h4>Histogramas con curva normal</h4>
+        <div class="figure-container">
+            <img src="resultados_trec/02_histogramas_normalidad.png" alt="Histogramas con Curva Normal">
+            <p class="figure-caption">Figura 2. Histogramas de frecuencia con curva normal teórica superpuesta. Panel izquierdo: preprueba. Panel derecho: postprueba. Las líneas verticales indican la media (azul) y mediana (verde) de cada distribución.</p>
+        </div>
+
+        <p>Los histogramas (Figura 2) permiten evaluar visualmente la forma de las distribuciones. En ambas fases se observa una distribución relativamente simétrica, aunque con cierta desviación respecto a la curva normal teórica, especialmente en las colas. La postprueba presenta una distribución más concentrada alrededor de la media.</p>
+
+        <h4>Gráfico de barras con error estándar</h4>
+        <div class="figure-container">
+            <img src="resultados_trec/03_barras_medias_error.png" alt="Gráfico de Barras con Error Estándar">
+            <p class="figure-caption">Figura 3. Comparación de medias con barras de error estándar. La línea punteada conecta ambas medias, destacando la magnitud de la reducción. El rectángulo amarillo indica la mejora porcentual y absoluta.</p>
+        </div>
+
+        <p>El gráfico de barras (Figura 3) ilustra claramente la diferencia entre las medias de ambas fases, con intervalos de confianza que no se superponen, sugiriendo una diferencia estadísticamente significativa. Las barras de error estándar son considerablemente más pequeñas en la postprueba, indicando mayor precisión en la estimación de la media poblacional.</p>
+
+        <!-- Datos Crudos -->
+        <h3>Datos crudos de eventos registrados</h3>
+        <p>A continuación se presentan las tablas con los datos originales de todos los eventos registrados durante las fases de preprueba y postprueba.</p>
+
+        <h4>Datos de preprueba (Noviembre - Diciembre 2024)</h4>
+        <div class="data-table-container">
+            <div class="table-caption">Tabla 4. Eventos correctivos registrados durante la preprueba (n = 86)</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID Evento</th>
+                        <th>Fecha</th>
+                        <th>Turno</th>
+                        <th>Línea</th>
+                        <th>Tiempo Respuesta (min)</th>
+                        <th>Tipo de Evento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>E001</td><td>2024-11-04</td><td>Mañana</td><td>Formado</td><td>62.45</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E002</td><td>2024-11-04</td><td>Mañana</td><td>Sellado</td><td>48.30</td><td>Alarma presión</td></tr>
+                    <tr><td>E003</td><td>2024-11-04</td><td>Tarde</td><td>Corte</td><td>71.20</td><td>Falla sensor</td></tr>
+                    <tr><td>E004</td><td>2024-11-04</td><td>Noche</td><td>Formado</td><td>55.80</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E005</td><td>2024-11-05</td><td>Mañana</td><td>Sellado</td><td>89.15</td><td>Desviación temperatura</td></tr>
+                    <tr><td>E006</td><td>2024-11-05</td><td>Tarde</td><td>Corte</td><td>43.50</td><td>Alarma velocidad</td></tr>
+                    <tr><td>E007</td><td>2024-11-05</td><td>Noche</td><td>Formado</td><td>67.90</td><td>Falla mecánica</td></tr>
+                    <tr><td>E008</td><td>2024-11-06</td><td>Mañana</td><td>Sellado</td><td>52.30</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E009</td><td>2024-11-06</td><td>Tarde</td><td>Corte</td><td>78.60</td><td>Desviación presión</td></tr>
+                    <tr><td>E010</td><td>2024-11-06</td><td>Noche</td><td>Formado</td><td>45.20</td><td>Alarma sensor</td></tr>
+                    <tr><td>E011</td><td>2024-11-07</td><td>Mañana</td><td>Sellado</td><td>95.40</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E012</td><td>2024-11-07</td><td>Tarde</td><td>Corte</td><td>58.75</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E013</td><td>2024-11-07</td><td>Noche</td><td>Formado</td><td>64.10</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E014</td><td>2024-11-08</td><td>Mañana</td><td>Sellado</td><td>51.80</td><td>Alarma temperatura</td></tr>
+                    <tr><td>E015</td><td>2024-11-08</td><td>Tarde</td><td>Corte</td><td>73.25</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E016</td><td>2024-11-08</td><td>Noche</td><td>Formado</td><td>59.90</td><td>Desviación calidad</td></tr>
+                    <tr><td>E017</td><td>2024-11-09</td><td>Mañana</td><td>Sellado</td><td>46.40</td><td>Alarma presión</td></tr>
+                    <tr><td>E018</td><td>2024-11-09</td><td>Tarde</td><td>Corte</td><td>82.50</td><td>Falla sensor</td></tr>
+                    <tr><td>E019</td><td>2024-11-09</td><td>Noche</td><td>Formado</td><td>68.30</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E020</td><td>2024-11-10</td><td>Mañana</td><td>Sellado</td><td>54.70</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E021</td><td>2024-11-11</td><td>Tarde</td><td>Corte</td><td>76.85</td><td>Alarma nivel</td></tr>
+                    <tr><td>E022</td><td>2024-11-11</td><td>Noche</td><td>Formado</td><td>61.20</td><td>Falla mecánica</td></tr>
+                    <tr><td>E023</td><td>2024-11-12</td><td>Mañana</td><td>Sellado</td><td>49.60</td><td>Desviación temperatura</td></tr>
+                    <tr><td>E024</td><td>2024-11-12</td><td>Tarde</td><td>Corte</td><td>87.40</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E025</td><td>2024-11-12</td><td>Noche</td><td>Formado</td><td>56.90</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E026</td><td>2024-11-13</td><td>Mañana</td><td>Sellado</td><td>72.15</td><td>Alarma presión</td></tr>
+                    <tr><td>E027</td><td>2024-11-13</td><td>Tarde</td><td>Corte</td><td>44.80</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E028</td><td>2024-11-13</td><td>Noche</td><td>Formado</td><td>63.50</td><td>Falla sensor</td></tr>
+                    <tr><td>E029</td><td>2024-11-14</td><td>Mañana</td><td>Sellado</td><td>91.20</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E030</td><td>2024-11-14</td><td>Tarde</td><td>Corte</td><td>57.30</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E031</td><td>2024-11-14</td><td>Noche</td><td>Formado</td><td>69.75</td><td>Alarma temperatura</td></tr>
+                    <tr><td>E032</td><td>2024-11-15</td><td>Mañana</td><td>Sellado</td><td>53.40</td><td>Desviación calidad</td></tr>
+                    <tr><td>E033</td><td>2024-11-15</td><td>Tarde</td><td>Corte</td><td>79.60</td><td>Falla mecánica</td></tr>
+                    <tr><td>E034</td><td>2024-11-15</td><td>Noche</td><td>Formado</td><td>47.90</td><td>Alarma velocidad</td></tr>
+                    <tr><td>E035</td><td>2024-11-16</td><td>Mañana</td><td>Sellado</td><td>65.80</td><td>Desviación presión</td></tr>
+                    <tr><td>E036</td><td>2024-11-16</td><td>Tarde</td><td>Corte</td><td>84.30</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E037</td><td>2024-11-16</td><td>Noche</td><td>Formado</td><td>58.25</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E038</td><td>2024-11-17</td><td>Mañana</td><td>Sellado</td><td>51.70</td><td>Alarma sensor</td></tr>
+                    <tr><td>E039</td><td>2024-11-17</td><td>Tarde</td><td>Corte</td><td>74.95</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E040</td><td>2024-11-18</td><td>Noche</td><td>Formado</td><td>62.10</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E041</td><td>2024-11-18</td><td>Mañana</td><td>Sellado</td><td>48.85</td><td>Alarma temperatura</td></tr>
+                    <tr><td>E042</td><td>2024-11-18</td><td>Tarde</td><td>Corte</td><td>88.50</td><td>Falla mecánica</td></tr>
+                    <tr><td>E043</td><td>2024-11-18</td><td>Noche</td><td>Formado</td><td>55.60</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E044</td><td>2024-11-19</td><td>Mañana</td><td>Sellado</td><td>70.40</td><td>Desviación calidad</td></tr>
+                    <tr><td>E045</td><td>2024-11-19</td><td>Tarde</td><td>Corte</td><td>43.20</td><td>Alarma presión</td></tr>
+                    <tr><td>E046</td><td>2024-11-19</td><td>Noche</td><td>Formado</td><td>66.90</td><td>Falla sensor</td></tr>
+                    <tr><td>E047</td><td>2024-11-20</td><td>Mañana</td><td>Sellado</td><td>93.75</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E048</td><td>2024-11-20</td><td>Tarde</td><td>Corte</td><td>59.30</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E049</td><td>2024-11-20</td><td>Noche</td><td>Formado</td><td>52.80</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E050</td><td>2024-11-21</td><td>Mañana</td><td>Sellado</td><td>77.65</td><td>Alarma nivel</td></tr>
+                    <tr><td>E051</td><td>2024-11-21</td><td>Tarde</td><td>Corte</td><td>46.50</td><td>Falla mecánica</td></tr>
+                    <tr><td>E052</td><td>2024-11-21</td><td>Noche</td><td>Formado</td><td>64.20</td><td>Desviación temperatura</td></tr>
+                    <tr><td>E053</td><td>2024-11-22</td><td>Mañana</td><td>Sellado</td><td>81.90</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E054</td><td>2024-11-22</td><td>Tarde</td><td>Corte</td><td>54.40</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E055</td><td>2024-11-22</td><td>Noche</td><td>Formado</td><td>68.75</td><td>Alarma velocidad</td></tr>
+                    <tr><td>E056</td><td>2024-11-23</td><td>Mañana</td><td>Sellado</td><td>50.60</td><td>Desviación presión</td></tr>
+                    <tr><td>E057</td><td>2024-11-23</td><td>Tarde</td><td>Corte</td><td>75.30</td><td>Falla sensor</td></tr>
+                    <tr><td>E058</td><td>2024-11-23</td><td>Noche</td><td>Formado</td><td>61.85</td><td>Alarma temperatura</td></tr>
+                    <tr><td>E059</td><td>2024-11-24</td><td>Mañana</td><td>Sellado</td><td>47.20</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E060</td><td>2024-11-25</td><td>Tarde</td><td>Corte</td><td>85.40</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E061</td><td>2024-11-25</td><td>Noche</td><td>Formado</td><td>57.95</td><td>Desviación calidad</td></tr>
+                    <tr><td>E062</td><td>2024-11-25</td><td>Mañana</td><td>Sellado</td><td>72.60</td><td>Alarma presión</td></tr>
+                    <tr><td>E063</td><td>2024-11-26</td><td>Tarde</td><td>Corte</td><td>44.30</td><td>Falla mecánica</td></tr>
+                    <tr><td>E064</td><td>2024-11-26</td><td>Noche</td><td>Formado</td><td>66.10</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E065</td><td>2024-11-26</td><td>Mañana</td><td>Sellado</td><td>90.25</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E066</td><td>2024-11-27</td><td>Tarde</td><td>Corte</td><td>53.70</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E067</td><td>2024-11-27</td><td>Noche</td><td>Formado</td><td>69.45</td><td>Alarma sensor</td></tr>
+                    <tr><td>E068</td><td>2024-11-27</td><td>Mañana</td><td>Sellado</td><td>56.80</td><td>Desviación temperatura</td></tr>
+                    <tr><td>E069</td><td>2024-11-28</td><td>Tarde</td><td>Corte</td><td>78.95</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E070</td><td>2024-11-28</td><td>Noche</td><td>Formado</td><td>48.60</td><td>Alarma velocidad</td></tr>
+                    <tr><td>E071</td><td>2024-11-28</td><td>Mañana</td><td>Sellado</td><td>63.25</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E072</td><td>2024-11-29</td><td>Tarde</td><td>Corte</td><td>86.70</td><td>Falla mecánica</td></tr>
+                    <tr><td>E073</td><td>2024-11-29</td><td>Noche</td><td>Formado</td><td>51.90</td><td>Desviación presión</td></tr>
+                    <tr><td>E074</td><td>2024-11-29</td><td>Mañana</td><td>Sellado</td><td>74.35</td><td>Alarma temperatura</td></tr>
+                    <tr><td>E075</td><td>2024-11-30</td><td>Tarde</td><td>Corte</td><td>45.80</td><td>Falla sensor</td></tr>
+                    <tr><td>E076</td><td>2024-11-30</td><td>Noche</td><td>Formado</td><td>67.50</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E077</td><td>2024-11-30</td><td>Mañana</td><td>Sellado</td><td>92.10</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E078</td><td>2024-12-01</td><td>Tarde</td><td>Corte</td><td>58.40</td><td>Desviación calidad</td></tr>
+                    <tr><td>E079</td><td>2024-12-01</td><td>Noche</td><td>Formado</td><td>71.85</td><td>Alarma presión</td></tr>
+                    <tr><td>E080</td><td>2024-12-01</td><td>Mañana</td><td>Sellado</td><td>49.25</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E081</td><td>2024-12-02</td><td>Tarde</td><td>Corte</td><td>83.60</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E082</td><td>2024-12-02</td><td>Noche</td><td>Formado</td><td>55.10</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E083</td><td>2024-12-02</td><td>Mañana</td><td>Sellado</td><td>68.90</td><td>Alarma sensor</td></tr>
+                    <tr><td>E084</td><td>2024-12-02</td><td>Tarde</td><td>Corte</td><td>42.70</td><td>Falla mecánica</td></tr>
+                    <tr><td>E085</td><td>2024-12-03</td><td>Noche</td><td>Formado</td><td>76.20</td><td>Desviación temperatura</td></tr>
+                    <tr><td>E086</td><td>2024-12-03</td><td>Mañana</td><td>Sellado</td><td>60.55</td><td>Alarma velocidad</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Datos de postprueba (Enero - Febrero 2025)</h4>
+        <div class="data-table-container">
+            <div class="table-caption">Tabla 5. Eventos correctivos registrados durante la postprueba (n = 86)</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID Evento</th>
+                        <th>Fecha</th>
+                        <th>Turno</th>
+                        <th>Línea</th>
+                        <th>Tiempo Respuesta (min)</th>
+                        <th>Tipo de Evento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>E001</td><td>2025-01-06</td><td>Mañana</td><td>Formado</td><td>24.30</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E002</td><td>2025-01-06</td><td>Mañana</td><td>Sellado</td><td>18.75</td><td>Alarma presión</td></tr>
+                    <tr><td>E003</td><td>2025-01-06</td><td>Tarde</td><td>Corte</td><td>28.60</td><td>Falla sensor</td></tr>
+                    <tr><td>E004</td><td>2025-01-06</td><td>Noche</td><td>Formado</td><td>21.40</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E005</td><td>2025-01-07</td><td>Mañana</td><td>Sellado</td><td>32.85</td><td>Desviación temperatura</td></tr>
+                    <tr><td>E006</td><td>2025-01-07</td><td>Tarde</td><td>Corte</td><td>16.20</td><td>Alarma velocidad</td></tr>
+                    <tr><td>E007</td><td>2025-01-07</td><td>Noche</td><td>Formado</td><td>26.50</td><td>Falla mecánica</td></tr>
+                    <tr><td>E008</td><td>2025-01-08</td><td>Mañana</td><td>Sellado</td><td>19.90</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E009</td><td>2025-01-08</td><td>Tarde</td><td>Corte</td><td>29.40</td><td>Desviación presión</td></tr>
+                    <tr><td>E010</td><td>2025-01-08</td><td>Noche</td><td>Formado</td><td>17.65</td><td>Alarma sensor</td></tr>
+                    <tr><td>E011</td><td>2025-01-09</td><td>Mañana</td><td>Sellado</td><td>35.20</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E012</td><td>2025-01-09</td><td>Tarde</td><td>Corte</td><td>22.30</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E013</td><td>2025-01-09</td><td>Noche</td><td>Formado</td><td>25.80</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E014</td><td>2025-01-10</td><td>Mañana</td><td>Sellado</td><td>20.45</td><td>Alarma temperatura</td></tr>
+                    <tr><td>E015</td><td>2025-01-10</td><td>Tarde</td><td>Corte</td><td>27.95</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E016</td><td>2025-01-10</td><td>Noche</td><td>Formado</td><td>23.10</td><td>Desviación calidad</td></tr>
+                    <tr><td>E017</td><td>2025-01-11</td><td>Mañana</td><td>Sellado</td><td>18.60</td><td>Alarma presión</td></tr>
+                    <tr><td>E018</td><td>2025-01-11</td><td>Tarde</td><td>Corte</td><td>31.75</td><td>Falla sensor</td></tr>
+                    <tr><td>E019</td><td>2025-01-11</td><td>Noche</td><td>Formado</td><td>26.20</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E020</td><td>2025-01-12</td><td>Mañana</td><td>Sellado</td><td>21.85</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E021</td><td>2025-01-13</td><td>Tarde</td><td>Corte</td><td>29.50</td><td>Alarma nivel</td></tr>
+                    <tr><td>E022</td><td>2025-01-13</td><td>Noche</td><td>Formado</td><td>24.40</td><td>Falla mecánica</td></tr>
+                    <tr><td>E023</td><td>2025-01-13</td><td>Mañana</td><td>Sellado</td><td>19.25</td><td>Desviación temperatura</td></tr>
+                    <tr><td>E024</td><td>2025-01-14</td><td>Tarde</td><td>Corte</td><td>33.60</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E025</td><td>2025-01-14</td><td>Noche</td><td>Formado</td><td>22.70</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E026</td><td>2025-01-14</td><td>Mañana</td><td>Sellado</td><td>27.80</td><td>Alarma presión</td></tr>
+                    <tr><td>E027</td><td>2025-01-15</td><td>Tarde</td><td>Corte</td><td>17.40</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E028</td><td>2025-01-15</td><td>Noche</td><td>Formado</td><td>24.95</td><td>Falla sensor</td></tr>
+                    <tr><td>E029</td><td>2025-01-15</td><td>Mañana</td><td>Sellado</td><td>34.50</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E030</td><td>2025-01-16</td><td>Tarde</td><td>Corte</td><td>21.15</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E031</td><td>2025-01-16</td><td>Noche</td><td>Formado</td><td>26.85</td><td>Alarma temperatura</td></tr>
+                    <tr><td>E032</td><td>2025-01-16</td><td>Mañana</td><td>Sellado</td><td>20.60</td><td>Desviación calidad</td></tr>
+                    <tr><td>E033</td><td>2025-01-17</td><td>Tarde</td><td>Corte</td><td>30.25</td><td>Falla mecánica</td></tr>
+                    <tr><td>E034</td><td>2025-01-17</td><td>Noche</td><td>Formado</td><td>18.90</td><td>Alarma velocidad</td></tr>
+                    <tr><td>E035</td><td>2025-01-17</td><td>Mañana</td><td>Sellado</td><td>25.40</td><td>Desviación presión</td></tr>
+                    <tr><td>E036</td><td>2025-01-18</td><td>Tarde</td><td>Corte</td><td>32.10</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E037</td><td>2025-01-18</td><td>Noche</td><td>Formado</td><td>22.55</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E038</td><td>2025-01-18</td><td>Mañana</td><td>Sellado</td><td>19.80</td><td>Alarma sensor</td></tr>
+                    <tr><td>E039</td><td>2025-01-19</td><td>Tarde</td><td>Corte</td><td>28.70</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E040</td><td>2025-01-20</td><td>Noche</td><td>Formado</td><td>24.20</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E041</td><td>2025-01-20</td><td>Mañana</td><td>Sellado</td><td>18.95</td><td>Alarma temperatura</td></tr>
+                    <tr><td>E042</td><td>2025-01-20</td><td>Tarde</td><td>Corte</td><td>33.85</td><td>Falla mecánica</td></tr>
+                    <tr><td>E043</td><td>2025-01-20</td><td>Noche</td><td>Formado</td><td>21.60</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E044</td><td>2025-01-21</td><td>Mañana</td><td>Sellado</td><td>27.30</td><td>Desviación calidad</td></tr>
+                    <tr><td>E045</td><td>2025-01-21</td><td>Tarde</td><td>Corte</td><td>16.75</td><td>Alarma presión</td></tr>
+                    <tr><td>E046</td><td>2025-01-21</td><td>Noche</td><td>Formado</td><td>25.90</td><td>Falla sensor</td></tr>
+                    <tr><td>E047</td><td>2025-01-22</td><td>Mañana</td><td>Sellado</td><td>36.40</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E048</td><td>2025-01-22</td><td>Tarde</td><td>Corte</td><td>23.10</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E049</td><td>2025-01-22</td><td>Noche</td><td>Formado</td><td>20.55</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E050</td><td>2025-01-23</td><td>Mañana</td><td>Sellado</td><td>29.80</td><td>Alarma nivel</td></tr>
+                    <tr><td>E051</td><td>2025-01-23</td><td>Tarde</td><td>Corte</td><td>18.25</td><td>Falla mecánica</td></tr>
+                    <tr><td>E052</td><td>2025-01-23</td><td>Noche</td><td>Formado</td><td>25.65</td><td>Desviación temperatura</td></tr>
+                    <tr><td>E053</td><td>2025-01-24</td><td>Mañana</td><td>Sellado</td><td>31.90</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E054</td><td>2025-01-24</td><td>Tarde</td><td>Corte</td><td>21.40</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E055</td><td>2025-01-24</td><td>Noche</td><td>Formado</td><td>26.75</td><td>Alarma velocidad</td></tr>
+                    <tr><td>E056</td><td>2025-01-25</td><td>Mañana</td><td>Sellado</td><td>19.50</td><td>Desviación presión</td></tr>
+                    <tr><td>E057</td><td>2025-01-25</td><td>Tarde</td><td>Corte</td><td>28.95</td><td>Falla sensor</td></tr>
+                    <tr><td>E058</td><td>2025-01-25</td><td>Noche</td><td>Formado</td><td>24.30</td><td>Alarma temperatura</td></tr>
+                    <tr><td>E059</td><td>2025-01-26</td><td>Mañana</td><td>Sellado</td><td>18.10</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E060</td><td>2025-01-27</td><td>Tarde</td><td>Corte</td><td>32.60</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E061</td><td>2025-01-27</td><td>Noche</td><td>Formado</td><td>22.85</td><td>Desviación calidad</td></tr>
+                    <tr><td>E062</td><td>2025-01-27</td><td>Mañana</td><td>Sellado</td><td>27.45</td><td>Alarma presión</td></tr>
+                    <tr><td>E063</td><td>2025-01-28</td><td>Tarde</td><td>Corte</td><td>17.20</td><td>Falla mecánica</td></tr>
+                    <tr><td>E064</td><td>2025-01-28</td><td>Noche</td><td>Formado</td><td>25.40</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E065</td><td>2025-01-28</td><td>Mañana</td><td>Sellado</td><td>34.75</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E066</td><td>2025-01-29</td><td>Tarde</td><td>Corte</td><td>20.90</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E067</td><td>2025-01-29</td><td>Noche</td><td>Formado</td><td>26.55</td><td>Alarma sensor</td></tr>
+                    <tr><td>E068</td><td>2025-01-29</td><td>Mañana</td><td>Sellado</td><td>22.15</td><td>Desviación temperatura</td></tr>
+                    <tr><td>E069</td><td>2025-01-30</td><td>Tarde</td><td>Corte</td><td>30.40</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E070</td><td>2025-01-30</td><td>Noche</td><td>Formado</td><td>18.65</td><td>Alarma velocidad</td></tr>
+                    <tr><td>E071</td><td>2025-01-30</td><td>Mañana</td><td>Sellado</td><td>24.80</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E072</td><td>2025-01-31</td><td>Tarde</td><td>Corte</td><td>33.20</td><td>Falla mecánica</td></tr>
+                    <tr><td>E073</td><td>2025-01-31</td><td>Noche</td><td>Formado</td><td>20.35</td><td>Desviación presión</td></tr>
+                    <tr><td>E074</td><td>2025-01-31</td><td>Mañana</td><td>Sellado</td><td>28.60</td><td>Alarma temperatura</td></tr>
+                    <tr><td>E075</td><td>2025-02-01</td><td>Tarde</td><td>Corte</td><td>17.85</td><td>Falla sensor</td></tr>
+                    <tr><td>E076</td><td>2025-02-01</td><td>Noche</td><td>Formado</td><td>26.10</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E077</td><td>2025-02-01</td><td>Mañana</td><td>Sellado</td><td>35.50</td><td>Falla eléctrica</td></tr>
+                    <tr><td>E078</td><td>2025-02-02</td><td>Tarde</td><td>Corte</td><td>22.70</td><td>Desviación calidad</td></tr>
+                    <tr><td>E079</td><td>2025-02-02</td><td>Noche</td><td>Formado</td><td>27.95</td><td>Alarma presión</td></tr>
+                    <tr><td>E080</td><td>2025-02-02</td><td>Mañana</td><td>Sellado</td><td>19.40</td><td>Falla hidráulica</td></tr>
+                    <tr><td>E081</td><td>2025-02-03</td><td>Tarde</td><td>Corte</td><td>31.85</td><td>Desviación velocidad</td></tr>
+                    <tr><td>E082</td><td>2025-02-03</td><td>Noche</td><td>Formado</td><td>21.50</td><td>Producto defectuoso</td></tr>
+                    <tr><td>E083</td><td>2025-02-03</td><td>Mañana</td><td>Sellado</td><td>26.30</td><td>Alarma sensor</td></tr>
+                    <tr><td>E084</td><td>2025-02-03</td><td>Tarde</td><td>Corte</td><td>16.95</td><td>Falla mecánica</td></tr>
+                    <tr><td>E085</td><td>2025-02-04</td><td>Noche</td><td>Formado</td><td>29.65</td><td>Desviación temperatura</td></tr>
+                    <tr><td>E086</td><td>2025-02-04</td><td>Mañana</td><td>Sellado</td><td>23.25</td><td>Alarma velocidad</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- 4.1.2.2 ANÁLISIS INFERENCIAL -->
+        <!-- ============================================ -->
+
+        <h2><span class="section-number">4.1.2.2</span> Análisis Inferencial</h2>
+
+        <p>El análisis inferencial permite determinar si las diferencias observadas entre las fases de preprueba y postprueba son estadísticamente significativas, o si podrían atribuirse al azar. Se aplicaron pruebas de normalidad, pruebas de hipótesis paramétricas y no paramétricas, y se calculó el tamaño del efecto.</p>
+
+        <!-- Prueba de Normalidad -->
+        <h3>Prueba de normalidad (Shapiro-Wilk)</h3>
+
+        <p>Previo a la selección de la prueba de hipótesis apropiada, se evaluó el supuesto de normalidad mediante la prueba de Shapiro-Wilk, que contrasta la hipótesis de que los datos provienen de una distribución normal.</p>
+
+        <div class="highlight-box">
+            <strong>Hipótesis de la prueba de normalidad:</strong><br>
+            <strong>H₀:</strong> Los datos provienen de una distribución normal<br>
+            <strong>H₁:</strong> Los datos NO provienen de una distribución normal<br>
+            <strong>Nivel de significancia:</strong> α = 0.05
+        </div>
+
+        <div class="table-caption">Tabla 6. Resultados de la prueba de normalidad Shapiro-Wilk</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Conjunto de Datos</th>
+                    <th>Estadístico W</th>
+                    <th>p-valor</th>
+                    <th>Decisión (α=0.05)</th>
+                    <th>Interpretación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Preprueba</strong></td>
+                    <td>0.9581</td>
+                    <td>0.0071</td>
+                    <td>RECHAZAR H₀</td>
+                    <td>Distribución NO normal</td>
+                </tr>
+                <tr>
+                    <td><strong>Postprueba</strong></td>
+                    <td>0.9637</td>
+                    <td>0.0163</td>
+                    <td>RECHAZAR H₀</td>
+                    <td>Distribución NO normal</td>
+                </tr>
+                <tr>
+                    <td><strong>Diferencias pareadas</strong></td>
+                    <td>0.9561</td>
+                    <td>0.0052</td>
+                    <td>RECHAZAR H₀</td>
+                    <td>Distribución NO normal</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación de normalidad:</strong> Los resultados de la prueba de Shapiro-Wilk indican que tanto las distribuciones de preprueba (p = 0.0071) como postprueba (p = 0.0163), así como las diferencias pareadas (p = 0.0052), presentan desviaciones significativas respecto a la distribución normal (p < 0.05). Estos resultados se observan visualmente en los histogramas (Figura 2), donde las distribuciones muestran ligeras asimetrías y desviaciones respecto a la curva normal teórica.</p>
+
+        <div class="result-box" style="background-color: #fff3cd; border-color: #856404;">
+            <h4 style="color: #856404;">Decisión metodológica</h4>
+            <p style="margin: 0;">Dado que las distribuciones no cumplen el supuesto de normalidad, se recomienda utilizar la <strong>prueba de Wilcoxon para rangos con signo</strong>, alternativa no paramétrica a la prueba t de Student pareada. No obstante, se presentan resultados de ambas pruebas para fines comparativos y mayor robustez en las conclusiones.</p>
+        </div>
+
+        <!-- Prueba t de Student -->
+        <h3>Prueba t de Student pareada (paramétrica)</h3>
+
+        <p>La prueba t de Student para muestras pareadas evalúa si existe diferencia significativa entre las medias de dos grupos relacionados. Aunque no se cumple estrictamente el supuesto de normalidad, esta prueba es relativamente robusta ante desviaciones moderadas cuando el tamaño muestral es grande (n = 86).</p>
+
+        <div class="highlight-box">
+            <strong>Hipótesis estadística:</strong><br>
+            <strong>H₀:</strong> μ<sub>preprueba</sub> = μ<sub>postprueba</sub> (no hay diferencia en las medias)<br>
+            <strong>H₁:</strong> μ<sub>preprueba</sub> ≠ μ<sub>postprueba</sub> (existe diferencia significativa)<br>
+            <strong>Nivel de significancia:</strong> α = 0.05<br>
+            <strong>Prueba:</strong> Bilateral
+        </div>
+
+        <div class="table-caption">Tabla 7. Resultados de la prueba t de Student pareada</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Estadístico t</strong></td>
+                    <td>41.0682</td>
+                </tr>
+                <tr>
+                    <td><strong>Grados de libertad (gl)</strong></td>
+                    <td>85</td>
+                </tr>
+                <tr>
+                    <td><strong>p-valor (bilateral)</strong></td>
+                    <td>&lt; 0.000001</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisión (α=0.05)</strong></td>
+                    <td>RECHAZAR H₀</td>
+                </tr>
+                <tr>
+                    <td><strong>Conclusión</strong></td>
+                    <td>Diferencia estadísticamente SIGNIFICATIVA</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación:</strong> El valor del estadístico t (41.07) es extremadamente alto, con un p-valor prácticamente cero (p < 0.000001), muy inferior al nivel de significancia establecido (α = 0.05). Esto proporciona evidencia contundente para rechazar la hipótesis nula y concluir que existe una diferencia estadísticamente significativa entre las medias de preprueba y postprueba.</p>
+
+        <!-- Prueba de Wilcoxon -->
+        <h3>Prueba de Wilcoxon para rangos con signo (no paramétrica)</h3>
+
+        <p>La prueba de Wilcoxon es la alternativa no paramétrica a la prueba t pareada, adecuada cuando no se cumple el supuesto de normalidad. Esta prueba compara las medianas de dos muestras relacionadas basándose en los rangos de las diferencias.</p>
+
+        <div class="highlight-box">
+            <strong>Hipótesis estadística:</strong><br>
+            <strong>H₀:</strong> La mediana de las diferencias es cero (no hay cambio)<br>
+            <strong>H₁:</strong> La mediana de las diferencias es diferente de cero (hay cambio significativo)<br>
+            <strong>Nivel de significancia:</strong> α = 0.05<br>
+            <strong>Prueba:</strong> Bilateral
+        </div>
+
+        <div class="table-caption">Tabla 8. Resultados de la prueba de Wilcoxon</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Estadístico W</strong></td>
+                    <td>0.0000</td>
+                </tr>
+                <tr>
+                    <td><strong>p-valor (bilateral)</strong></td>
+                    <td>&lt; 0.000001</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisión (α=0.05)</strong></td>
+                    <td>RECHAZAR H₀</td>
+                </tr>
+                <tr>
+                    <td><strong>Conclusión</strong></td>
+                    <td>Diferencia estadísticamente SIGNIFICATIVA</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación:</strong> El estadístico de Wilcoxon (W = 0) indica que TODOS los eventos de postprueba presentaron tiempos menores que sus correspondientes eventos de preprueba, sin excepción. El p-valor prácticamente cero (p < 0.000001) confirma que esta diferencia no puede atribuirse al azar. Este resultado es aún más contundente que el de la prueba t, validando la robustez de las conclusiones incluso sin el supuesto de normalidad.</p>
+
+        <div class="result-box">
+            <h4>Conclusión de las pruebas de hipótesis</h4>
+            <p><strong>Tanto la prueba paramétrica (t de Student) como la no paramétrica (Wilcoxon) convergen en la misma conclusión:</strong> existe evidencia estadística altamente significativa (p < 0.000001) de que la implementación del sistema redujo el tiempo de respuesta ante eventos correctivos. Dado que las distribuciones no son normales, se considera la <strong>prueba de Wilcoxon como el resultado primario</strong>, aunque ambas pruebas corroboran la significancia estadística.</p>
+        </div>
+
+        <!-- Tamaño del Efecto -->
+        <h3>Tamaño del efecto (d de Cohen)</h3>
+
+        <p>Además de la significancia estadística, es fundamental evaluar la <strong>significancia práctica</strong> o magnitud del efecto. El tamaño del efecto cuantifica la magnitud de la diferencia observada, independientemente del tamaño muestral, permitiendo evaluar la relevancia práctica del hallazgo.</p>
+
+        <p>Se utilizó la <strong>d de Cohen</strong>, una medida estandarizada del tamaño del efecto para comparaciones de medias. Para muestras pareadas, se calcula como:</p>
+
+        <div class="highlight-box">
+            <strong>Fórmula:</strong><br>
+            d = (Media de diferencias) / (Desviación estándar de las diferencias)<br><br>
+            <strong>Criterios de interpretación (Cohen, 1988):</strong><br>
+            • d < 0.2 → Efecto insignificante<br>
+            • 0.2 ≤ d < 0.5 → Efecto pequeño<br>
+            • 0.5 ≤ d < 0.8 → Efecto mediano<br>
+            • d ≥ 0.8 → Efecto grande
+        </div>
+
+        <div class="table-caption">Tabla 9. Tamaño del efecto y su interpretación</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Medida</th>
+                    <th>Valor</th>
+                    <th>Interpretación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>d de Cohen</strong></td>
+                    <td>4.4285</td>
+                    <td><strong>Efecto GRANDE (d ≥ 0.8)</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Media de diferencias</strong></td>
+                    <td>39.66 minutos</td>
+                    <td>Reducción promedio observada</td>
+                </tr>
+                <tr>
+                    <td><strong>DE de diferencias</strong></td>
+                    <td>8.95 minutos</td>
+                    <td>Variabilidad de las diferencias</td>
+                </tr>
+                <tr>
+                    <td><strong>Porcentaje de mejora</strong></td>
+                    <td>61.37%</td>
+                    <td>Reducción relativa respecto al baseline</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación del tamaño del efecto:</strong> El valor de d de Cohen = 4.43 es <strong>extraordinariamente alto</strong>, superando ampliamente el umbral de 0.8 para efectos grandes. Esto indica que la reducción en el tiempo de respuesta no solo es estadísticamente significativa, sino que tiene una <strong>relevancia práctica sustancial</strong>. Un valor de d > 4 es excepcional en investigación aplicada y sugiere que la intervención (implementación del sistema) produjo un cambio de magnitud considerable en el indicador TREC.</p>
+
+        <!-- Intervalo de Confianza -->
+        <h3>Intervalo de confianza para la diferencia de medias</h3>
+
+        <p>El intervalo de confianza proporciona un rango de valores plausibles para la verdadera diferencia poblacional entre las medias de preprueba y postprueba, con un nivel de confianza del 95%.</p>
+
+        <div class="table-caption">Tabla 10. Intervalo de confianza al 95% para la diferencia de medias</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parámetro</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Diferencia de medias</strong></td>
+                    <td>39.66 minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Error estándar</strong></td>
+                    <td>0.97 minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>t crítico (gl=85, α=0.05)</strong></td>
+                    <td>1.9883</td>
+                </tr>
+                <tr>
+                    <td><strong>IC 95%</strong></td>
+                    <td>[37.74, 41.58] minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Amplitud del intervalo</strong></td>
+                    <td>3.84 minutos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación del intervalo de confianza:</strong> Con un 95% de confianza, la verdadera reducción promedio en el tiempo de respuesta poblacional se encuentra entre 37.74 y 41.58 minutos. Es importante destacar que:</p>
+
+        <ul>
+            <li>El intervalo <strong>NO contiene el cero</strong>, lo que confirma la significancia estadística de la diferencia.</li>
+            <li>El límite inferior (37.74 min) indica que, en el peor escenario, la reducción es de al menos 37.74 minutos.</li>
+            <li>El límite superior (41.58 min) sugiere que la reducción podría ser hasta de 41.58 minutos.</li>
+            <li>La amplitud relativamente estrecha del intervalo (3.84 min) refleja la <strong>alta precisión</strong> de la estimación, derivada del gran tamaño muestral y la consistencia de los resultados.</li>
+        </ul>
+
+        <!-- Interpretación de Resultados -->
+        <h3>Interpretación integral de resultados</h3>
+
+        <div class="result-box">
+            <h4>Síntesis de hallazgos estadísticos</h4>
+
+            <p><strong>1. Significancia estadística:</strong></p>
+            <p>Se rechaza la hipótesis nula con evidencia altamente significativa (p < 0.000001). Tanto la prueba paramétrica (t de Student) como la no paramétrica (Wilcoxon) confirman que la diferencia observada entre preprueba y postprueba NO puede atribuirse al azar.</p>
+
+            <p><strong>2. Magnitud del efecto:</strong></p>
+            <p>El tamaño del efecto (d de Cohen = 4.43) es extraordinariamente grande, indicando que la implementación del sistema produjo un impacto SUSTANCIAL en el tiempo de respuesta ante eventos correctivos. Esta magnitud supera ampliamente los estándares de efectos "grandes" en investigación aplicada.</p>
+
+            <p><strong>3. Relevancia práctica:</strong></p>
+            <p>La reducción promedio de 39.66 minutos (61.37%) representa una mejora operativa considerable. Esta reducción implica que los eventos correctivos se resuelven en menos de la mitad del tiempo que requería el sistema anterior, con impactos directos en:</p>
+            <ul>
+                <li>Menor tiempo de inactividad de equipos</li>
+                <li>Mayor eficiencia operativa</li>
+                <li>Reducción de pérdidas por paradas no planificadas</li>
+                <li>Mejora en indicadores de productividad</li>
+            </ul>
+
+            <p><strong>4. Precisión de la estimación:</strong></p>
+            <p>El intervalo de confianza estrecho [37.74, 41.58] minutos demuestra alta precisión en la cuantificación del efecto, fortaleciendo la confiabilidad de las conclusiones.</p>
+
+            <p><strong>5. Consistencia de resultados:</strong></p>
+            <p>El estadístico de Wilcoxon (W = 0) revela que el 100% de los eventos pareados mostraron reducción en el tiempo de respuesta tras la implementación, sin excepciones. Esta consistencia perfecta subraya la robustez y generalización del efecto observado.</p>
+        </div>
+
+        <div class="highlight-box" style="background-color: #d4edda; border-left-color: #28a745;">
+            <strong style="color: #155724; font-size: 16px;">CONCLUSIÓN FINAL</strong><br><br>
+            Los resultados del análisis estadístico proporcionan <strong>evidencia contundente</strong> de que la implementación del sistema de gestión redujo significativamente el tiempo de respuesta ante eventos correctivos (TREC). La combinación de:
+            <ul style="margin-top: 10px;">
+                <li>Significancia estadística extremadamente alta (p < 0.000001)</li>
+                <li>Tamaño del efecto extraordinariamente grande (d = 4.43)</li>
+                <li>Reducción sustancial y prácticamente relevante (61.37%)</li>
+                <li>Consistencia perfecta en todos los eventos (W = 0)</li>
+                <li>Intervalo de confianza preciso y alejado de cero</li>
+            </ul>
+            <strong style="color: #155724;">VALIDAN LA HIPÓTESIS DE INVESTIGACIÓN</strong>, demostrando que el sistema implementado mejora significativamente la eficiencia operativa en la respuesta ante eventos correctivos, con implicaciones prácticas de alto impacto para la organización.
+        </div>
+
+        <!-- Footer -->
+        <div style="margin-top: 60px; padding-top: 20px; border-top: 2px solid #3498db; text-align: center; color: #7f8c8d; font-size: 12px;">
+            <p><strong>Análisis Estadístico Indicador TREC</strong></p>
+            <p>Documento generado: Octubre 2025</p>
+            <p>Datos analizados: n = 86 eventos pareados (Preprueba: Nov-Dic 2024 | Postprueba: Ene-Feb 2025)</p>
+            <p style="margin-top: 10px; font-style: italic;">Software utilizado: Python (pandas, scipy, matplotlib, seaborn)</p>
+        </div>
+
+    </div>
+</body>
+</html>
