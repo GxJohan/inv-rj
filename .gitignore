@@ -48,6 +48,7 @@ ehthumbs.db
 Thumbs.db
 
 # Data outputs (carpetas de resultados)
-resultados_*/
+# Comentado para permitir imágenes en GitHub Pages
+# resultados_*/
 
 # HTML exports
