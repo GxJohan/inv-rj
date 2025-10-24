@@ -1,0 +1,19 @@
+codigo,dimension,pregunta_completa
+P1,Acceso a información,El sistema me permite acceder a información de producción en tiempo real
+P2,Acceso a información,Puedo consultar datos históricos de producción fácilmente
+P3,Acceso a información,La información de diferentes líneas está consolidada en un solo lugar
+P4,Calidad de datos,Los datos mostrados son precisos y confiables
+P5,Calidad de datos,La información es consistente entre diferentes reportes
+P6,Calidad de datos,Los datos están actualizados y reflejan la situación actual
+P7,Facilidad de uso,La interfaz del sistema es intuitiva y fácil de usar
+P8,Facilidad de uso,Puedo navegar por las diferentes funciones sin dificultad
+P9,Facilidad de uso,El tiempo de aprendizaje del sistema fue razonable
+P10,Utilidad para decisiones,El sistema me ayuda a analizar problemas de producción
+P11,Utilidad para decisiones,Las alertas del sistema son útiles para tomar decisiones oportunas
+P12,Utilidad para decisiones,Los reportes generados apoyan efectivamente mi toma de decisiones
+P13,Tiempo de respuesta,El sistema genera información rápidamente cuando la necesito
+P14,Tiempo de respuesta,Puedo identificar problemas más rápido con el sistema actual
+P15,Tiempo de respuesta,El tiempo para tomar decisiones correctivas ha mejorado
+P16,Soporte general,La capacitación recibida fue adecuada para usar el sistema
+P17,Soporte general,El soporte técnico resuelve problemas eficientemente
+P18,Soporte general,La documentación del sistema es clara y útil

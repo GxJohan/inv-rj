@@ -1,0 +1,9 @@
+id_responsable,cargo,turno,P1_acceso_tiempo_real,P2_acceso_historico,P3_acceso_consolidado,P4_calidad_precision,P5_calidad_consistencia,P6_calidad_actualizada,P7_facilidad_interfaz,P8_facilidad_navegacion,P9_facilidad_aprendizaje,P10_utilidad_analisis,P11_utilidad_alertas,P12_utilidad_reportes,P13_tiempo_generar_info,P14_tiempo_identificar_problemas,P15_tiempo_tomar_decision,P16_soporte_capacitacion,P17_soporte_resolucion,P18_soporte_documentacion,promedio_individual
+R01,Jefe de Producción,N/A,2,3,2,3,2,3,3,3,4,2,2,3,2,2,2,3,3,3,2.67
+R02,Supervisor Corte,Mañana,2,2,2,3,3,2,3,3,3,2,2,2,2,3,3,3,2,3,2.56
+R03,Supervisor Formado,Tarde,3,2,2,2,2,3,3,4,3,3,2,2,3,2,2,3,3,2,2.61
+R04,Supervisor Sellado,Noche,2,2,1,2,2,2,3,3,3,2,1,2,2,2,2,2,3,3,2.22
+R05,Jefe Turno Mañana,Mañana,3,3,2,3,3,3,4,3,4,3,2,3,2,3,3,3,3,3,2.94
+R06,Jefe Turno Tarde,Tarde,2,3,2,3,2,2,3,3,3,2,2,3,3,2,2,3,3,2,2.56
+R07,Jefe Turno Noche,Noche,2,2,2,2,2,2,3,3,3,2,2,2,2,2,2,2,2,3,2.28
+R08,Ingeniero de Proceso,N/A,3,3,3,3,3,3,4,4,3,3,3,3,3,3,3,3,3,3,3.11
