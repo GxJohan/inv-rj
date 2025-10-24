@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicador TDI - Análisis Estadístico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            background-color: white;
+            padding: 60px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 22px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        h4 {
+            color: #34495e;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        p {
+            text-align: justify;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .metadata {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 13px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        thead {
+            background-color: #3498db;
+            color: white;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        tbody tr:hover {
+            background-color: #e8f4f8;
+        }
+
+        .table-caption {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .figure-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .figure-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .figure-caption {
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #2c3e50;
+            font-style: italic;
+        }
+
+        .highlight-box {
+            background-color: #ecf0f1;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 25px 0;
+            font-size: 14px;
+        }
+
+        .highlight-box strong {
+            color: #2c3e50;
+        }
+
+        .result-box {
+            background-color: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .result-box h4 {
+            color: #155724;
+            margin-top: 0;
+        }
+
+        ul {
+            margin-left: 40px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .section-number {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .improvement-highlight {
+            background-color: #d1ecf1;
+            border: 2px solid #17a2b8;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .improvement-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0c5460;
+            margin: 10px 0;
+        }
+
+        .data-table-container {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        .data-table {
+            font-size: 11px;
+        }
+
+        .data-table th {
+            background-color: #2c3e50;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Título Principal -->
+        <h1>Análisis Estadístico del Indicador TDI</h1>
+        <h1 style="font-size: 22px; margin-top: 10px;">Tasa de Decisiones Informadas (TDI)</h1>
+
+        <div class="metadata">
+            Fecha del análisis: Octubre 2025<br>
+            Investigación: Tesis de Ingeniería<br>
+            Diseño: Estudio cuasi-experimental con mediciones pre-post<br>
+            Tamaño muestral: n = 132 decisiones pareadas
+        </div>
+
+        <!-- Introducción -->
+        <div class="highlight-box">
+            <strong>Objetivo del estudio:</strong> Evaluar el impacto de la implementación de un sistema de gestión en la Tasa de Decisiones Informadas (TDI) en un entorno de producción industrial. Se comparan decisiones operativas realizadas antes (preprueba) y después (postprueba) de la implementación del sistema, evaluando si fueron basadas en análisis previo de datos.
+        </div>
+
+        <p><strong>Periodo de preprueba:</strong> Noviembre - Diciembre 2024 (antes de implementar el sistema)</p>
+        <p><strong>Periodo de postprueba:</strong> Enero - Febrero 2025 (después de implementar el sistema)</p>
+        <p><strong>Variable medida:</strong> Decisión informada (binaria: 0 = sin análisis previo, 1 = con análisis previo)</p>
+
+        <!-- ============================================ -->
+        <!-- 4.1.4.1 ANÁLISIS DESCRIPTIVO -->
+        <!-- ============================================ -->
+
+        <h2><span class="section-number">4.1.4.1</span> Análisis Descriptivo</h2>
+
+        <p>El análisis descriptivo permite caracterizar el comportamiento de las decisiones operativas en ambas fases del estudio, identificando la proporción de decisiones basadas en análisis de datos y cómo esta proporción cambió tras la implementación del sistema. A continuación se presentan los estadísticos clave para la preprueba y postprueba.</p>
+
+        <!-- Estadísticos Preprueba -->
+        <h3>Estadísticos descriptivos: Preprueba</h3>
+        <p>Los datos de preprueba corresponden a 132 decisiones operativas registradas durante noviembre y diciembre de 2024, antes de la implementación del sistema. Se evaluó si cada decisión fue tomada con base en análisis previo de datos (decisión informada = 1) o sin dicho análisis (decisión informada = 0).</p>
+
+        <div class="table-caption">Tabla 1. Estadísticos descriptivos de la fase preprueba (n = 132)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Valor</th>
+                    <th>Unidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Total de decisiones (n)</strong></td>
+                    <td>132</td>
+                    <td>decisiones</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisiones informadas</strong></td>
+                    <td>66</td>
+                    <td>decisiones</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisiones NO informadas</strong></td>
+                    <td>66</td>
+                    <td>decisiones</td>
+                </tr>
+                <tr>
+                    <td><strong>TDI PREPRUEBA</strong></td>
+                    <td>50.00</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td><strong>Proporción (0-1)</strong></td>
+                    <td>0.5000</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación preprueba:</strong> Durante la fase preprueba, solo el 50% de las decisiones operativas fueron tomadas con base en análisis previo de datos (66 de 132). Esto indica que la mitad de las decisiones se realizaron de manera reactiva o basándose en experiencia previa sin análisis cuantitativo, mientras que la otra mitad sí utilizó análisis de datos para fundamentar la decisión.</p>
+
+        <!-- Análisis por Tipo de Decisión (Preprueba) -->
+        <h4>Distribución por tipo de decisión (preprueba)</h4>
+
+        <div class="table-caption">Tabla 2. Distribución de TDI por tipo de decisión en preprueba</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo de Decisión</th>
+                    <th>N Decisiones</th>
+                    <th>Decisiones Informadas</th>
+                    <th>TDI (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Planificada</strong></td>
+                    <td>40</td>
+                    <td>40</td>
+                    <td>100.00%</td>
+                </tr>
+                <tr>
+                    <td><strong>Rutinaria</strong></td>
+                    <td>49</td>
+                    <td>26</td>
+                    <td>53.06%</td>
+                </tr>
+                <tr>
+                    <td><strong>Urgente</strong></td>
+                    <td>43</td>
+                    <td>0</td>
+                    <td>0.00%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación por tipo:</strong> En la preprueba se observa un patrón claro: las decisiones planificadas siempre fueron informadas (100%), las rutinarias lo fueron en aproximadamente la mitad de los casos (53.06%), y las decisiones urgentes nunca contaron con análisis previo (0%), evidenciando la dificultad de aplicar análisis cuantitativo en situaciones de urgencia.</p>
+
+        <!-- Estadísticos Postprueba -->
+        <h3>Estadísticos descriptivos: Postprueba</h3>
+        <p>Los datos de postprueba corresponden a 132 decisiones operativas registradas durante enero y febrero de 2025, después de implementar el sistema. Se evaluaron las mismas 132 situaciones de decisión que en la preprueba (datos pareados).</p>
+
+        <div class="table-caption">Tabla 3. Estadísticos descriptivos de la fase postprueba (n = 132)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Valor</th>
+                    <th>Unidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Total de decisiones (n)</strong></td>
+                    <td>132</td>
+                    <td>decisiones</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisiones informadas</strong></td>
+                    <td>111</td>
+                    <td>decisiones</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisiones NO informadas</strong></td>
+                    <td>21</td>
+                    <td>decisiones</td>
+                </tr>
+                <tr>
+                    <td><strong>TDI POSTPRUEBA</strong></td>
+                    <td>84.09</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td><strong>Proporción (0-1)</strong></td>
+                    <td>0.8409</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación postprueba:</strong> Tras la implementación del sistema, el 84.09% de las decisiones operativas fueron tomadas con base en análisis previo de datos (111 de 132). Esto representa un incremento sustancial respecto a la preprueba, indicando que el sistema facilitó el acceso y análisis de información para la toma de decisiones.</p>
+
+        <!-- Análisis por Tipo de Decisión (Postprueba) -->
+        <h4>Distribución por tipo de decisión (postprueba)</h4>
+
+        <div class="table-caption">Tabla 4. Distribución de TDI por tipo de decisión en postprueba</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo de Decisión</th>
+                    <th>N Decisiones</th>
+                    <th>Decisiones Informadas</th>
+                    <th>TDI (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Planificada</strong></td>
+                    <td>40</td>
+                    <td>40</td>
+                    <td>100.00%</td>
+                </tr>
+                <tr>
+                    <td><strong>Rutinaria</strong></td>
+                    <td>49</td>
+                    <td>49</td>
+                    <td>100.00%</td>
+                </tr>
+                <tr>
+                    <td><strong>Urgente</strong></td>
+                    <td>43</td>
+                    <td>22</td>
+                    <td>51.16%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación por tipo:</strong> En la postprueba se observa una mejora dramática: las decisiones planificadas mantuvieron el 100%, las rutinarias alcanzaron el 100% (mejora de +46.94 pp), y lo más notable es que las decisiones urgentes, que antes no contaban con análisis previo, ahora lo tienen en más de la mitad de los casos (51.16%, mejora de +51.16 pp).</p>
+
+        <!-- Tabla Comparativa -->
+        <h3>Tabla comparativa: Preprueba vs Postprueba</h3>
+        <p>La Tabla 5 presenta una comparación directa de los estadísticos clave entre ambas fases, facilitando la evaluación del cambio observado tras la implementación del sistema.</p>
+
+        <div class="table-caption">Tabla 5. Comparación de estadísticos entre preprueba y postprueba</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Preprueba</th>
+                    <th>Postprueba</th>
+                    <th>Diferencia</th>
+                    <th>Cambio (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Total decisiones</strong></td>
+                    <td>132</td>
+                    <td>132</td>
+                    <td>0</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisiones informadas</strong></td>
+                    <td>66</td>
+                    <td>111</td>
+                    <td>+45</td>
+                    <td>+68.18%</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisiones NO informadas</strong></td>
+                    <td>66</td>
+                    <td>21</td>
+                    <td>-45</td>
+                    <td>-68.18%</td>
+                </tr>
+                <tr>
+                    <td><strong>TDI (%)</strong></td>
+                    <td>50.00%</td>
+                    <td>84.09%</td>
+                    <td>+34.09 pp</td>
+                    <td>+68.18%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="table-caption">Tabla 6. Comparación por tipo de decisión</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo Decisión</th>
+                    <th>N Decisiones</th>
+                    <th>TDI PRE (%)</th>
+                    <th>TDI POST (%)</th>
+                    <th>Mejora (pp)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Planificada</strong></td>
+                    <td>40</td>
+                    <td>100.00%</td>
+                    <td>100.00%</td>
+                    <td>+0.00</td>
+                </tr>
+                <tr>
+                    <td><strong>Rutinaria</strong></td>
+                    <td>49</td>
+                    <td>53.06%</td>
+                    <td>100.00%</td>
+                    <td>+46.94</td>
+                </tr>
+                <tr>
+                    <td><strong>Urgente</strong></td>
+                    <td>43</td>
+                    <td>0.00%</td>
+                    <td>51.16%</td>
+                    <td>+51.16</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="improvement-highlight">
+            <p style="margin: 0; font-size: 16px; color: #0c5460;"><strong>Mejora Observada</strong></p>
+            <div class="improvement-value">+34.09 pp</div>
+            <p style="margin: 0; font-size: 14px; color: #0c5460;">Incremento relativo: +68.18%</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #0c5460;">IC 95%: [23.52%, 44.66%]</p>
+        </div>
+
+        <p><strong>Interpretación comparativa:</strong> Se observa un incremento sustancial en el TDI de 34.09 puntos porcentuales, equivalente a una mejora del 68.18% respecto al valor inicial. Este cambio implica que 45 decisiones adicionales (de las 132 totales) fueron tomadas con base en análisis de datos tras la implementación del sistema. El análisis por tipo de decisión revela que el mayor impacto se produjo en decisiones urgentes (+51.16 pp), seguidas de las rutinarias (+46.94 pp), mientras que las planificadas ya partían de un nivel óptimo (100%).</p>
+
+        <!-- Gráficos -->
+        <h3>Visualizaciones gráficas</h3>
+
+        <h4>Gráfico comparativo de TDI</h4>
+        <div class="figure-container">
+            <img src="resultados_tdi/01_tdi_comparativo.png" alt="Gráfico Comparativo TDI Preprueba vs Postprueba">
+            <p class="figure-caption">Figura 1. Comparación de la Tasa de Decisiones Informadas (TDI) entre preprueba y postprueba. Se observa un incremento claro del 50.00% al 84.09%, con una línea de conexión que destaca la magnitud de la mejora (+34.09 pp). La línea punteada horizontal en 50% sirve como referencia para visualizar el punto de partida.</p>
+        </div>
+
+        <p>El gráfico de barras (Figura 1) ilustra visualmente la magnitud del cambio observado. La diferencia de altura entre ambas barras representa el incremento de 34.09 puntos porcentuales en el TDI, indicando que tras la implementación del sistema, la proporción de decisiones basadas en análisis de datos aumentó significativamente.</p>
+
+        <h4>Distribución de decisiones informadas vs no informadas</h4>
+        <div class="figure-container">
+            <img src="resultados_tdi/02_barras_apiladas.png" alt="Barras Apiladas Decisiones Informadas">
+            <p class="figure-caption">Figura 2. Distribución de decisiones informadas (verde) y no informadas (rojo) en preprueba y postprueba. Las barras apiladas muestran la proporción de cada tipo de decisión sobre el total de 132. En preprueba hay equilibrio (50-50), mientras que en postprueba predominan ampliamente las decisiones informadas (84.09% vs 15.91%).</p>
+        </div>
+
+        <p>Las barras apiladas (Figura 2) permiten visualizar claramente cómo cambió la composición de las decisiones. En la preprueba, el equilibrio entre decisiones informadas (verde) y no informadas (rojo) era casi perfecto (50-50). En la postprueba, la barra verde (decisiones informadas) domina claramente la composición, representando el 84.09% del total, mientras que las decisiones no informadas (rojo) se redujeron drásticamente al 15.91%.</p>
+
+        <!-- ============================================ -->
+        <!-- 4.1.4.2 ANÁLISIS INFERENCIAL -->
+        <!-- ============================================ -->
+
+        <h2><span class="section-number">4.1.4.2</span> Análisis Inferencial</h2>
+
+        <p>El análisis inferencial permite determinar si las diferencias observadas entre las fases de preprueba y postprueba son estadísticamente significativas, o si podrían atribuirse al azar. Dado que la variable TDI es binaria (0 = sin análisis, 1 = con análisis) y los datos son pareados (mismas 132 situaciones de decisión evaluadas antes y después), se aplicó la <strong>prueba de McNemar</strong>, específicamente diseñada para datos binarios pareados.</p>
+
+        <!-- Consideraciones sobre Normalidad -->
+        <div class="highlight-box" style="background-color: #fff3cd; border-left-color: #856404;">
+            <strong style="color: #856404;">⚠️ Consideraciones metodológicas importantes:</strong><br><br>
+            <strong>Naturaleza de los datos:</strong> La variable "decisión informada" es <strong>BINARIA</strong> (0 o 1), no cuantitativa. Por tanto, <strong>NO es apropiado aplicar la prueba de normalidad Shapiro-Wilk</strong> ni la prueba t de Student, que asumen datos continuos provenientes de distribuciones normales.<br><br>
+            <strong>Prueba apropiada:</strong> Para datos binarios pareados (mismas decisiones evaluadas antes/después), la <strong>prueba de McNemar</strong> es el método estadístico estándar y más apropiado. Esta prueba analiza las transiciones entre estados (0→1, 1→0) y determina si hubo un cambio significativo en las proporciones.
+        </div>
+
+        <h3>Prueba de normalidad: No aplicable</h3>
+        <p>A diferencia de los indicadores anteriores (TREC y Satisfacción), que medían variables cuantitativas continuas u ordinales, el indicador TDI es una variable <strong>binaria categórica</strong>. Las pruebas de normalidad (como Shapiro-Wilk) están diseñadas para evaluar si datos continuos siguen una distribución normal, por lo que <strong>no son aplicables a variables binarias</strong> que solo pueden tomar valores de 0 o 1.</p>
+
+        <p>En lugar de evaluar normalidad, el análisis inferencial de datos binarios pareados se basa en la <strong>tabla de contingencia 2×2</strong>, que cruza los estados preprueba y postprueba, y la <strong>prueba de McNemar</strong>, que evalúa si las proporciones cambiaron significativamente.</p>
+
+        <!-- Prueba de McNemar -->
+        <h3>Prueba de McNemar (datos binarios pareados)</h3>
+
+        <p>La prueba de McNemar es el método estándar para analizar cambios en proporciones de variables binarias medidas en dos momentos diferentes en los mismos sujetos (datos pareados). En este caso, evalúa si hubo un cambio significativo en la proporción de decisiones informadas antes y después de implementar el sistema.</p>
+
+        <div class="highlight-box">
+            <strong>Hipótesis estadística:</strong><br>
+            <strong>H₀:</strong> P(Informada<sub>POST</sub>) = P(Informada<sub>PRE</sub>) (no hay cambio en la proporción)<br>
+            <strong>H₁:</strong> P(Informada<sub>POST</sub>) ≠ P(Informada<sub>PRE</sub>) (existe cambio significativo en la proporción)<br>
+            <strong>Nivel de significancia:</strong> α = 0.05<br>
+            <strong>Prueba:</strong> Bilateral
+        </div>
+
+        <h4>Tabla de contingencia 2×2</h4>
+        <p>La tabla de contingencia cruza el estado de cada decisión en la preprueba (filas) con su estado en la postprueba (columnas), permitiendo identificar las transiciones:</p>
+
+        <div class="table-caption">Tabla 7. Tabla de contingencia 2×2 para la prueba de McNemar</div>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2" style="vertical-align: middle;">PREPRUEBA</th>
+                    <th colspan="2" style="text-align: center;">POSTPRUEBA</th>
+                    <th rowspan="2" style="vertical-align: middle;">Total</th>
+                </tr>
+                <tr>
+                    <th>No Informada (0)</th>
+                    <th>Informada (1)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>No Informada (0)</strong></td>
+                    <td style="text-align: center;">21</td>
+                    <td style="text-align: center;">45</td>
+                    <td style="text-align: center;">66</td>
+                </tr>
+                <tr>
+                    <td><strong>Informada (1)</strong></td>
+                    <td style="text-align: center;">0</td>
+                    <td style="text-align: center;">66</td>
+                    <td style="text-align: center;">66</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td style="text-align: center;">21</td>
+                    <td style="text-align: center;">111</td>
+                    <td style="text-align: center;">132</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box">
+            <strong>Interpretación de la tabla de contingencia:</strong><br><br>
+            • <strong>n₀₀ = 21:</strong> Decisiones que NO eran informadas en preprueba y SIGUEN sin serlo en postprueba (sin cambio negativo)<br>
+            • <strong>n₀₁ = 45:</strong> Decisiones que NO eran informadas en preprueba → AHORA SÍ son informadas en postprueba (<strong>MEJORA</strong>)<br>
+            • <strong>n₁₀ = 0:</strong> Decisiones que SÍ eran informadas en preprueba → AHORA NO lo son en postprueba (<strong>EMPEORAMIENTO</strong>)<br>
+            • <strong>n₁₁ = 66:</strong> Decisiones que SÍ eran informadas en preprueba y SIGUEN siéndolo en postprueba (sin cambio positivo)<br><br>
+
+            <strong>Celdas relevantes para McNemar:</strong> La prueba de McNemar se enfoca en las celdas discordantes (n₀₁ y n₁₀), es decir, las decisiones que cambiaron de estado entre preprueba y postprueba. En este caso:<br>
+            • <strong>Mejoras (0→1):</strong> 45 decisiones<br>
+            • <strong>Empeoramientos (1→0):</strong> 0 decisiones<br>
+            • <strong>Mejora neta:</strong> 45 decisiones
+        </div>
+
+        <h4>Resultados de la prueba de McNemar</h4>
+
+        <div class="table-caption">Tabla 8. Resultados de la prueba de McNemar</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estadístico</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Estadístico de McNemar</strong></td>
+                    <td>0.0000</td>
+                </tr>
+                <tr>
+                    <td><strong>p-valor (bilateral, exacto)</strong></td>
+                    <td>&lt; 0.000001</td>
+                </tr>
+                <tr>
+                    <td><strong>Decisión (α=0.05)</strong></td>
+                    <td>RECHAZAR H₀</td>
+                </tr>
+                <tr>
+                    <td><strong>Conclusión</strong></td>
+                    <td>Diferencia estadísticamente SIGNIFICATIVA</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación:</strong> El estadístico de McNemar tiene un valor de 0.0000, lo que indica que <strong>TODAS las transiciones fueron en una sola dirección</strong>: de "no informada" a "informada" (45 mejoras, 0 empeoramientos). El p-valor prácticamente cero (p &lt; 0.000001) es muy inferior al nivel de significancia establecido (α = 0.05), proporcionando evidencia <strong>extremadamente fuerte</strong> para rechazar la hipótesis nula.</p>
+
+        <p>Este resultado demuestra que el incremento observado en el TDI (de 50.00% a 84.09%) <strong>NO puede atribuirse al azar</strong>, sino que refleja un cambio real y significativo en la proporción de decisiones operativas basadas en análisis de datos tras la implementación del sistema.</p>
+
+        <!-- Tamaño del Efecto -->
+        <h3>Tamaño del efecto (h de Cohen para proporciones)</h3>
+
+        <p>Además de la significancia estadística, es fundamental evaluar la <strong>significancia práctica</strong> o magnitud del efecto. El tamaño del efecto cuantifica qué tan grande es la diferencia observada, independientemente del tamaño muestral, permitiendo evaluar la relevancia práctica del hallazgo.</p>
+
+        <p>Para diferencias de proporciones, se utilizó la <strong>h de Cohen</strong>, una medida estandarizada del tamaño del efecto análoga a la d de Cohen pero específica para proporciones. Se calcula como:</p>
+
+        <div class="highlight-box">
+            <strong>Fórmula h de Cohen:</strong><br>
+            h = 2 × [arcsin(√p<sub>post</sub>) - arcsin(√p<sub>pre</sub>)]<br><br>
+            Donde p<sub>pre</sub> y p<sub>post</sub> son las proporciones en preprueba y postprueba.<br><br>
+            <strong>Criterios de interpretación (Cohen, 1988):</strong><br>
+            • h &lt; 0.2 → Efecto insignificante<br>
+            • 0.2 ≤ h &lt; 0.5 → Efecto pequeño<br>
+            • 0.5 ≤ h &lt; 0.8 → Efecto mediano<br>
+            • h ≥ 0.8 → Efecto grande
+        </div>
+
+        <div class="table-caption">Tabla 9. Tamaño del efecto y su interpretación</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Medida</th>
+                    <th>Valor</th>
+                    <th>Interpretación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Proporción PREPRUEBA</strong></td>
+                    <td>0.5000 (50.00%)</td>
+                    <td>Proporción inicial de decisiones informadas</td>
+                </tr>
+                <tr>
+                    <td><strong>Proporción POSTPRUEBA</strong></td>
+                    <td>0.8409 (84.09%)</td>
+                    <td>Proporción final de decisiones informadas</td>
+                </tr>
+                <tr>
+                    <td><strong>h de Cohen</strong></td>
+                    <td>0.7502</td>
+                    <td><strong>Efecto MEDIANO (0.5 ≤ h &lt; 0.8)</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Diferencia de proporciones</strong></td>
+                    <td>0.3409 (34.09 pp)</td>
+                    <td>Incremento absoluto observado</td>
+                </tr>
+                <tr>
+                    <td><strong>Porcentaje de mejora</strong></td>
+                    <td>68.18%</td>
+                    <td>Incremento relativo respecto al baseline</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación del tamaño del efecto:</strong> El valor de h de Cohen = 0.75 se encuentra en el rango de efecto <strong>MEDIANO</strong> (0.5 ≤ h &lt; 0.8), muy próximo al umbral de efecto grande (h ≥ 0.8). Esto indica que el incremento en el TDI no solo es estadísticamente significativo, sino que también tiene una <strong>relevancia práctica considerable</strong>. Un valor de h = 0.75 es sustancial en investigación aplicada y sugiere que la implementación del sistema produjo un cambio de magnitud importante en la tasa de decisiones operativas basadas en análisis de datos.</p>
+
+        <!-- Intervalo de Confianza -->
+        <h3>Intervalo de confianza para la diferencia de proporciones</h3>
+
+        <p>El intervalo de confianza proporciona un rango de valores plausibles para la verdadera diferencia poblacional entre las proporciones de preprueba y postprueba, con un nivel de confianza del 95%. Se utilizó la aproximación normal para diferencias de proporciones pareadas.</p>
+
+        <div class="table-caption">Tabla 10. Intervalo de confianza al 95% para la diferencia de proporciones</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parámetro</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Diferencia de proporciones</strong></td>
+                    <td>34.09 puntos porcentuales</td>
+                </tr>
+                <tr>
+                    <td><strong>Error estándar</strong></td>
+                    <td>5.39 puntos porcentuales</td>
+                </tr>
+                <tr>
+                    <td><strong>z crítico (α=0.05, bilateral)</strong></td>
+                    <td>1.96</td>
+                </tr>
+                <tr>
+                    <td><strong>IC 95%</strong></td>
+                    <td>[23.52%, 44.66%]</td>
+                </tr>
+                <tr>
+                    <td><strong>Amplitud del intervalo</strong></td>
+                    <td>21.14 puntos porcentuales</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Interpretación del intervalo de confianza:</strong> Con un 95% de confianza, el verdadero incremento en la tasa de decisiones informadas poblacional se encuentra entre 23.52% y 44.66%. Es importante destacar que:</p>
+
+        <ul>
+            <li>El intervalo <strong>NO contiene el cero</strong>, lo que confirma la significancia estadística de la diferencia.</li>
+            <li>El límite inferior (23.52%) indica que, en el peor escenario, el incremento es de al menos 23.52 puntos porcentuales.</li>
+            <li>El límite superior (44.66%) sugiere que el incremento podría ser hasta de 44.66 puntos porcentuales.</li>
+            <li>La amplitud del intervalo (21.14 pp) refleja una precisión razonable de la estimación, considerando que se trata de 132 decisiones pareadas.</li>
+            <li>Todos los valores dentro del IC representan incrementos sustanciales y prácticamente relevantes (todos superiores a 20%).</li>
+        </ul>
+
+        <!-- Interpretación Integral -->
+        <h3>Interpretación integral de resultados</h3>
+
+        <div class="result-box">
+            <h4>Síntesis de hallazgos estadísticos</h4>
+
+            <p><strong>1. Significancia estadística:</strong></p>
+            <p>Se rechaza la hipótesis nula con evidencia extremadamente significativa (p &lt; 0.000001). La prueba de McNemar, específicamente diseñada para datos binarios pareados, confirma que el incremento observado en el TDI NO puede atribuirse al azar, sino que refleja un cambio real y significativo en la proporción de decisiones operativas basadas en análisis de datos.</p>
+
+            <p><strong>2. Magnitud del efecto:</strong></p>
+            <p>El tamaño del efecto (h de Cohen = 0.75) es MEDIANO, muy próximo al umbral de efecto grande (h ≥ 0.8). Esta magnitud indica que la implementación del sistema produjo un impacto considerable en la tasa de decisiones informadas, con relevancia práctica sustancial.</p>
+
+            <p><strong>3. Relevancia práctica:</strong></p>
+            <p>El incremento de 34.09 puntos porcentuales (de 50.00% a 84.09%) representa una mejora operativa considerable. Esta mejora implica que:</p>
+            <ul>
+                <li>45 decisiones adicionales (de 132 totales) fueron tomadas con base en análisis de datos</li>
+                <li>El sistema facilitó el acceso y análisis de información para la toma de decisiones</li>
+                <li>La proporción de decisiones reactivas o basadas solo en experiencia se redujo drásticamente (de 50% a 15.91%)</li>
+                <li>Impacto directo en la calidad de las decisiones operativas y reducción de riesgos</li>
+            </ul>
+
+            <p><strong>4. Precisión de la estimación:</strong></p>
+            <p>El intervalo de confianza [23.52%, 44.66%] demuestra que, incluso en el escenario más conservador, el incremento en TDI es superior al 20%, fortaleciendo la confiabilidad de las conclusiones.</p>
+
+            <p><strong>5. Consistencia de resultados:</strong></p>
+            <p>La tabla de contingencia revela que CERO decisiones que eran informadas en preprueba dejaron de serlo en postprueba (n₁₀ = 0), mientras que 45 decisiones que no eran informadas pasaron a serlo (n₀₁ = 45). Esta asimetría perfecta (45 mejoras vs 0 empeoramientos) subraya la robustez del efecto positivo del sistema.</p>
+
+            <p><strong>6. Análisis por tipo de decisión:</strong></p>
+            <p>El mayor impacto se observó en decisiones <strong>urgentes</strong> (+51.16 pp, de 0% a 51.16%) y <strong>rutinarias</strong> (+46.94 pp, de 53.06% a 100%), mientras que las decisiones planificadas ya partían de un nivel óptimo (100%). Esto demuestra que el sistema no solo mejora la planificación, sino que también facilita el análisis en situaciones de urgencia, donde antes era imposible.</p>
+        </div>
+
+        <div class="highlight-box" style="background-color: #d4edda; border-left-color: #28a745;">
+            <strong style="color: #155724; font-size: 16px;">CONCLUSIÓN FINAL</strong><br><br>
+            Los resultados del análisis estadístico proporcionan <strong>evidencia contundente</strong> de que la implementación del sistema de gestión incrementó significativamente la Tasa de Decisiones Informadas (TDI). La combinación de:
+            <ul style="margin-top: 10px;">
+                <li>Significancia estadística extremadamente alta (p &lt; 0.000001, prueba de McNemar)</li>
+                <li>Tamaño del efecto mediano-grande (h de Cohen = 0.75)</li>
+                <li>Incremento sustancial y prácticamente relevante (+34.09 pp, +68.18%)</li>
+                <li>Consistencia perfecta en transiciones (45 mejoras, 0 empeoramientos)</li>
+                <li>Intervalo de confianza alejado de cero [23.52%, 44.66%]</li>
+                <li>Mejoras en todos los tipos de decisión, especialmente urgentes (+51.16 pp)</li>
+            </ul>
+            <strong style="color: #155724;">VALIDAN LA HIPÓTESIS DE INVESTIGACIÓN</strong>, demostrando que el sistema implementado mejora significativamente la calidad de la toma de decisiones operativas al promover el análisis previo basado en datos, con implicaciones prácticas de alto impacto para la organización.
+        </div>
+
+        <!-- Footer -->
+        <div style="margin-top: 60px; padding-top: 20px; border-top: 2px solid #3498db; text-align: center; color: #7f8c8d; font-size: 12px;">
+            <p><strong>Análisis Estadístico Indicador TDI</strong></p>
+            <p>Documento generado: Octubre 2025</p>
+            <p>Datos analizados: n = 132 decisiones pareadas (Preprueba: Nov-Dic 2024 | Postprueba: Ene-Feb 2025)</p>
+            <p style="margin-top: 10px; font-style: italic;">Software utilizado: Python (pandas, scipy, matplotlib, statsmodels)</p>
+        </div>
+
+    </div>
+</body>
+</html>
